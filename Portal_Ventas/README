@@ -1,0 +1,13 @@
+** Portal de Ventas
+
+instrucciones:
+
+
+1.crear el siguiente usuario en mysql y darle permisos para la bd portal_ventas
+
+	user bd: pventasdba
+	pass bd: Pventasdba$
+2. copiar la carpeta portal_ventas a la carpeta de su localhost o crear un dominio virtual
+
+
+	
