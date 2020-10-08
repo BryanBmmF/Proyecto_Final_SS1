@@ -14,7 +14,7 @@ $coin = ConfigurationData::getByPreffix("general_coin")->val;
             // print_r($_SESSION);
              if(isset($_SESSION["product_updated"])):?>
               <p class="alert alert-info"><i class="fa fa-check"></i> Producto Actualizado Exitosamente</p>
-            <?php 
+            <?php
             unset($_SESSION["product_updated"]);
             endif; ?>
             </div>
@@ -120,6 +120,22 @@ $categories = CategoryData::getAll();
     </div>
   </div>
 
+  <div class="form-group">
+    <label for="inputEmail1" class="col-lg-2 control-label">Proveedor</label>
+    <div class="col-lg-10">
+<?php
+$providers = ProviderData::getAll();
+ if(count($providers)>0):?>
+<select name="provider_id" class="form-control">
+<option value="">-- SELECCIONE PROVEEDOR --</option>
+<?php foreach($providers as $cat):?>
+<option value="<?php echo $cat->id; ?>" <?php if($product->provider_id==$cat->id){ echo "selected";} ?>><?php echo $cat->nombre; ?></option>
+<?php endforeach; ?>
+</select>
+ <?php endif; ?>
+
+    </div>
+  </div>
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-6">
@@ -132,7 +148,7 @@ $categories = CategoryData::getAll();
   <input type="hidden" name="id" value="<?php echo $_GET["product_id"];?>">
 </form>
 
-                  
+
                 </div>
               </div>
             </div>
