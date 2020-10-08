@@ -17,14 +17,12 @@ class UserData {
 		$this->lastname = "";
 		$this->email = "";
 		$this->password = "";
-		$this->is_admin="";
 		$this->created_at = "NOW()";
 	}
 
 	public function add(){
-		$sql = "insert into user (name,lastname,username,email,password,is_admin,created_at) ";
-		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",$this->is_admin,$this->created_at)";
-//		print "<script>alert('USUARIO REGISTRADO:$sql');</script>";	
+		$sql = "insert into user (name,lastname,username,email,password,created_at) ";
+		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",$this->created_at)";
 		Executor::doit($sql);
 	}
 
@@ -47,34 +45,6 @@ class UserData {
 		$sql = "update ".self::$tablename." set password=\"$this->password\" where id=$this->id";
 		Executor::doit($sql);
 	}
-
-	public static function getByUser($user){
-		$sql = "select username from ".self::$tablename." where username=\"$user\"";
-		$query = Executor::doit($sql);
-		$found = null;
-		$data = new UserData();
-		while($r = $query[0]->fetch_array()){
-			$data->username = $r['username'];
-			$found = $data;
-		break;
-		}
-		return $found;
-	}
-
-	public static function getByEmail($email){
-		$sql = "select email,username from ".self::$tablename." where email=\"$email\"";
-		$query = Executor::doit($sql);
-		$found = null;
-		$data = new UserData();
-		while($r = $query[0]->fetch_array()){
-			$data->email = $r['email'];
-			$data->username = $r['username'];
-			$found = $data;
-		break;
-		}
-		return $found;
-	}
-
 
 	public static function getById($id){
 		$sql = "select * from ".self::$tablename." where id=$id";

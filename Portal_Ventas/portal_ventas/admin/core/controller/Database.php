@@ -18,6 +18,6 @@ class Database {
 		}
 		return self::$con;
 	}
-	
+
 }
 ?>
