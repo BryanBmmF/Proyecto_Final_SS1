@@ -50,6 +50,18 @@
     </div>
   </div>
   <div class="form-group">
+    <label for="inputEmail1" class="col-lg-12 control-label">*Usuario del Portal de Pagos</label>
+    <div class="col-lg-12">
+      <input type="text" name="user_ppagos" required class="form-control" id="inputEmail1" placeholder="Usuario del Portal">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="inputPassword1" class="col-lg-12 control-label">*Contrase&ntilde;a del Portal de Pagos</label>
+    <div class="col-lg-12">
+      <input type="password" required name="pass_ppagos" class="form-control" id="inputPassword1" placeholder="Contrase&ntilde;a del Portal">
+    </div>
+  </div>
+  <div class="form-group">
     <div class="col-lg-offset-2 col-lg-12">
       <div class="checkbox">
         <label>
