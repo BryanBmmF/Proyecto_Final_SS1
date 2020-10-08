@@ -7,6 +7,12 @@ instrucciones:
 
 	user bd: pventasdba
 	pass bd: Pventasdba$1
+<<<<<<< HEAD
+	CREATE USER 'pventasdba'@'%' IDENTIFIED WITH mysql_native_password BY 'Pventasdba$1';
+	GRANT ALL ON portal_ventas.* TO 'pventasdba'@'%';
+	GRANT ALL ON portal_pagos.* TO 'pventasdba'@'%';
+=======
+>>>>>>> develop
 2. copiar la carpeta portal_ventas a la carpeta de su localhost o crear un dominio virtual
 
 
