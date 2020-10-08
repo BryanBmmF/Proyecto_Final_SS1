@@ -25,7 +25,8 @@ $client->pass_ppagos = sha1(md5($_POST["pass_ppagos"]));
 $user = $client->user_ppagos;
 $pass = $client->pass_ppagos;
 #la url varia dependiendo el servidor donde se encuentre alojado
-$url = "http://ppagoss1.com/verificarCuenta.php?user=$user&pass=$pass";
+//$url = "http://ppagoss1.com/verificarCuenta.php?user=$user&pass=$pass";
+$url = "http://localhost/Proyecto_Final_SS1/PortalPagos/WebServices/verificarCuenta.php?user=$user&pass=$pass";
 
 #se envia la peticion y se obtieene la respuesta
 $data = json_decode(file_get_contents($url), true );
