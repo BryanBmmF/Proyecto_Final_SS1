@@ -13,7 +13,7 @@ if(count($_POST)>0){
 	$contrasenaPortalDePagos = sha1(md5($_POST["passwordportaldepagos"]));
 	#la url varia dependiendo el servidor donde se encuentre alojado
 
-	$url = "http://localhost/Proyecto_Final_SS1/Portal_Pagos/verificarCuenta.php?user=$usuarioPortalDePagos&pass=$contrasenaPortalDePagos";
+	$url = "http://localhost/Proyecto_Final_SS1/PortalPagos/WebServices/verificarCuenta.php?user=$usuarioPortalDePagos&pass=$contrasenaPortalDePagos";
 	$data = json_decode(file_get_contents($url), true );
 
 	//recorriendo el array devuelto
