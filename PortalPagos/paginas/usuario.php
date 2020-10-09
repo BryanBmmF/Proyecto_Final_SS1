@@ -62,7 +62,7 @@
           <v-spacer></v-spacer>
 
           <v-app-bar-nav-icon>
-            <v-btn @click="verPublicaciones()">
+            <v-btn @click="cargarPantallaIngresoDinero()">
               Ingresar Dinero
             </v-btn>
 
@@ -79,12 +79,12 @@
 
           </v-app-bar-nav-icon>
 
-          
+
           <v-toolbar-title> {{usuario}} </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-title> Saldo: Q{{saldo}} </v-toolbar-title>
 
-          
+
 
           <v-btn icon @click="cerrarSesion()">
             <v-icon>mdi-export</v-icon>
@@ -96,7 +96,7 @@
 
           <v-img src="../images/sistema/desenfocado2.jpeg">
             <center>
-              <v-toolbar-title>  PORTAL DE PAGOS</v-toolbar-title>
+              <v-toolbar-title> PORTAL DE PAGOS</v-toolbar-title>
             </center>
 
             <center>
@@ -111,42 +111,117 @@
             <center>
 
 
-            <v-container class="pa-4 text-center">
+              <v-container class="pa-4 text-center">
                 <v-row class="fill-height" align="center" justify="center">
-                  
-                    
-                      <v-hover v-slot:default="{ hover }">
-                        <v-card :elevation="hover ? 15 : 2"  class="scroll">
-                          <v-responsive :aspect-ratio="16/9">
-                            <v-img src="../images/sistema/fondo.jpg" >
-                              <v-card-title class="title black--text">
-                                BIENVENIDO A TU PERFIL DEL PORTAL DE PAGOS
-                              </v-card-title>
-                              <v-card-title class="title black--text">
-                                DATOS DE LA CUENTA DEL CORREO: {{usuario}}
-                              </v-card-title><br>
-                                <v-card-subtitle class="pb-0">Correo: {{usuario}}</v-card-subtitle>
-                                <v-card-subtitle class="pb-0">Saldo: Q{{saldo}}</v-card-subtitle>
-                                <v-card-subtitle class="pb-0">Nombre Completo: {{nombreCompleto}}</v-card-subtitle>
-                                <v-card-subtitle class="pb-0">Codigo Empresa: {{codigoEmpresa}}</v-card-subtitle>
-                                <v-card-subtitle class="pb-0">Empresa: {{empresa}}</v-card-subtitle>
-                                <v-card-subtitle class="pb-0">Tipo Usuario: {{tipoUsuario}}</v-card-subtitle>
-                                <v-card-subtitle class="pb-0">Tarjeta Credito: {{tarjetaCredito}}</v-card-subtitle>
-                                <v-card-subtitle class="pb-0">Cuenta Financiera: {{cuentaFinanciera}}</v-card-subtitle>
-                                <v-card-subtitle class="pb-0">Estado Cuenta: {{estadoCuenta}}</v-card-subtitle>
-                    
-                            </v-img>
-                          </v-responsive>
 
-                        </v-card>
-                      </v-hover>
-                    
-                  
+
+                  <v-hover v-slot:default="{ hover }">
+                    <v-card :elevation="hover ? 15 : 2" class="scroll">
+                      <v-responsive :aspect-ratio="16/9">
+                        <v-img src="../images/sistema/fondo.jpg">
+                          <v-card-title class="title black--text">
+                            BIENVENIDO A TU PERFIL DEL PORTAL DE PAGOS
+                          </v-card-title>
+                          <v-card-title class="title black--text">
+                            DATOS DE LA CUENTA DEL CORREO: {{usuario}}
+                          </v-card-title><br>
+                          <v-card-subtitle class="pb-0">Correo: {{usuario}}</v-card-subtitle>
+                          <v-card-subtitle class="pb-0">Saldo: Q{{saldo}}</v-card-subtitle>
+                          <v-card-subtitle class="pb-0">Nombre Completo: {{nombreCompleto}}</v-card-subtitle>
+                          <v-card-subtitle class="pb-0">Codigo Empresa: {{codigoEmpresa}}</v-card-subtitle>
+                          <v-card-subtitle class="pb-0">Empresa: {{empresa}}</v-card-subtitle>
+                          <v-card-subtitle class="pb-0">Tipo Usuario: {{tipoUsuario}}</v-card-subtitle>
+                          <v-card-subtitle class="pb-0">Tarjeta Credito: {{tarjetaCredito}}</v-card-subtitle>
+                          <v-card-subtitle class="pb-0">Cuenta Financiera: {{cuentaFinanciera}}</v-card-subtitle>
+                          <v-card-subtitle class="pb-0">Estado Cuenta: {{estadoCuenta}}</v-card-subtitle>
+
+                        </v-img>
+                      </v-responsive>
+
+                    </v-card>
+                  </v-hover>
+
+
                 </v-row>
               </v-container>
-            
-              </center>
-            
+
+            </center>
+
+
+
+
+
+
+
+        </div>
+
+        <div v-else-if="mostrar === 4">
+
+
+          <v-img src="../images/sistema/desenfocado.jpeg">
+            <center>
+              <v-toolbar-title> REALIZAR INGRESO DE DINERO A LA CUENTA</v-toolbar-title>
+            </center>
+
+            <center>
+              <v-card width="300" height="300">
+                <v-avatar class="profile" color="grey" size="300" tile>
+                  <v-img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" />
+                </v-avatar>
+              </v-card>
+            </center>
+            <br>
+            <br>
+            <center>
+
+
+              <v-container class="pa-4 text-center">
+                <v-row class="fill-height" align="center" justify="center">
+
+
+                  <v-hover v-slot:default="{ hover }">
+                    <v-card :elevation="hover ? 15 : 2" class="scroll">
+                      <v-responsive :aspect-ratio="16/9">
+                        <v-img src="../images/sistema/fondo.jpg">
+                          <v-form ref="form" v-model="valid" lazy-validation>
+                          <div> MENU PARA EL INGRESO DE PAGO</div>  <br>
+                          <v-text-field v-model="montoIngresoDinero"  :rules="[
+              () => !!montoIngresoDinero || 'El campo es requerido',
+                ]" type="number" label="Ingresa el monto de dinero" required></v-text-field>
+
+                            <div> SELECCIONA TU METODO DE PAGO</div>
+                            <v-radio-group v-model="radioGroupMetodo">
+                              <div v-if="cuentaFinanciera != null">
+                              <v-radio :label="`Cuenta Financiera: ${cuentaFinanciera}`" :value="1" selected ></v-radio>
+                              </div>
+                              <div v-if="tarjetaCredito != null">
+                              <v-radio :label="`Tarjeta de Credito: ${tarjetaCredito}`" :value="2"></v-radio>
+                              </div>
+                            </v-radio-group>
+
+                            <v-btn :disabled="!valid" color="success" class="mr-4" @click="realizarIngresoDinero">
+                              REALIZAR INGRESO DE DINERO
+                            </v-btn>
+
+                            <v-btn color="error" class="mr-4" @click="reset">
+                              Borrar Datos
+                            </v-btn>
+
+
+                          </v-form>
+
+                        </v-img>
+                      </v-responsive>
+
+                    </v-card>
+                  </v-hover>
+
+
+                </v-row>
+              </v-container>
+
+            </center>
+
 
 
 
