@@ -1,4 +1,4 @@
-<?php 
+<?php
 $coin = ConfigurationData::getByPreffix("general_coin")->val;
 ?>
         <!-- Main Content -->
@@ -114,7 +114,23 @@ $categories = CategoryData::getAll();
     </div>
   </div>
 
+  <div class="form-group">
+    <label for="inputEmail1" class="col-lg-2 control-label">Proveedor</label>
+    <div class="col-lg-10">
+  <?php
+  $providers = ProviderData::getAll();
+  if(count($providers)>0):?>
+  <select name="provider_id" class="form-control" required>
+  <option value="">-- SELECCIONE PROVEEDOR --</option>
 
+  <?php foreach($providers as $cat):?>
+  <option value="<?php echo $cat->id; ?>"><?php echo $cat->nombre; ?></option>
+  <?php endforeach; ?>
+  </select>
+  <?php endif; ?>
+
+    </div>
+  </div>
 
   <div class="form-group">
     <div class="col-lg-offset-2 col-lg-6">
@@ -125,7 +141,7 @@ $categories = CategoryData::getAll();
     </div>
   </div>
 </form>
-                  
+
                 </div>
               </div>
             </div>

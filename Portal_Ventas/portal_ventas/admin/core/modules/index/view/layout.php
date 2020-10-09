@@ -42,14 +42,14 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-<?php 
+<?php
 $u=null;
 if(isset($_SESSION["admin_id"]) && $_SESSION["admin_id"]!=""):
   $u = UserData::getById($_SESSION["admin_id"]);
 ?>
          <ul class="nav navbar-nav">
           <li><a href="../" target="_blank"><i class="fa fa-globe"></i> Ver tienda</a></li>
-          </ul> 
+          </ul>
           <ul class="nav navbar-nav side-nav">
           <li><a href="./"><i class="fa fa-home"></i> Inicio</a></li>
           <li><a href="index.php?view=products"><i class="fa fa-glass"></i> Productos</a></li>
@@ -57,6 +57,7 @@ if(isset($_SESSION["admin_id"]) && $_SESSION["admin_id"]!=""):
           <li><a href="index.php?view=sellreport"><i class="fa fa-area-chart"></i> Reportes</a></li>
           <li><a href="index.php?view=clients"><i class="fa fa-male"></i> Clientes</a></li>
           <li><a href="index.php?view=categories"><i class="fa fa-th-list"></i> Categorias</a></li>
+          <li><a href="index.php?view=providers"><i class="fa fa-users"></i> Proveedores</a></li>
           <li><a href="index.php?view=slider"><i class="fa fa-th-large"></i> Slider</a></li>
           <?php if($u->is_admin):?>
           <li><a href="index.php?view=settings"><i class="fa fa-wrench"></i> Ajustes</a></li>
@@ -65,7 +66,7 @@ if(isset($_SESSION["admin_id"]) && $_SESSION["admin_id"]!=""):
           </ul>
 <?php endif;?>
 <?php if(isset($_SESSION["admin_id"]) && $_SESSION["admin_id"]!=""):?>
-<?php 
+<?php
 $u=null;
 if($_SESSION["admin_id"]!=""){
   $u = UserData::getById($_SESSION["admin_id"]);
@@ -96,7 +97,7 @@ if($_SESSION["admin_id"]!=""){
 
       <div id="page-wrapper">
 
-<?php 
+<?php
   // puedo cargar otras funciones iniciales
   // dentro de la funcion donde cargo la vista actual
   // como por ejemplo cargar el corte actual

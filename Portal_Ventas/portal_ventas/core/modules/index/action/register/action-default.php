@@ -1,7 +1,7 @@
 <?php
 
 if(isset($_POST["accept"])){
-$c= ClientData::getByEmail($_POST["email"]);
+$c= ClientData::getByEmail($_POST["email"]); //verificando que el correo no este ya registrado
 if($c==null){
 $client =  new ClientData();
 $client->name = $_POST["name"];
@@ -10,6 +10,49 @@ $client->email = $_POST["email"];
 $client->address = $_POST["address"];
 $client->password = sha1(md5($_POST["password"]));
 $client->phone = $_POST["phone"];
+//nuevos campos solicitados
+$client->user_ppagos = $_POST["user_ppagos"];
+$client->pass_ppagos = sha1(md5($_POST["pass_ppagos"]));
+
+/**
+ * Antes de hacer el add del cliente se debe comprobar que este usuario exista en el ppagos
+ * 	1. Lo primero seria hacer la consulta al dominio
+ * 	2. parsear la respuesta json
+ * 	3. verificar que la respuesta sea correcta
+ *  4. crear o no el usuario cliente en este portal
+ */
+#parametros a consultar
+$user = $client->user_ppagos;
+$pass = $client->pass_ppagos;
+#la url varia dependiendo el servidor donde se encuentre alojado
+//$url = "http://ppagoss1.com/verificarCuenta.php?user=$user&pass=$pass";
+$url = "http://localhost/Proyecto_Final_SS1/PortalPagos/WebServices/verificarCuenta.php?user=$user&pass=$pass";
+
+#se envia la peticion y se obtieene la respuesta
+$data = json_decode(file_get_contents($url), true );
+//recorriendo el array devuelto
+$respuesta = "";
+foreach ($data as $res) {
+	foreach ($res as $key => $value){
+		switch ($key) {
+			case 'respuesta':
+				$respuesta = $value;
+				break;
+		}
+	}
+	//echo "<h1>Respuesta: " . $respuesta . "</h1>";
+	
+}
+
+#comprobacion de respuesta
+if($respuesta!="user_valido"){
+	//mensaje de error
+	//echo "<h1>Respuesta: " . $respuesta . "</h1>";
+	//redirigimos a la pantalla para generar la razon del fallo
+	Core::redir("index.php?view=deneg_client");
+	exit; //finalizamos la operacion
+}
+#si no hay errores se sigue el flujo normal y se agrega el usuario a la bd
 $client->add();
 
 
