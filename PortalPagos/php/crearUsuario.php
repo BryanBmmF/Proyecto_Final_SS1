@@ -61,7 +61,7 @@ $result= mysqli_query($bd,$sql);
 
 
   }else{
-    $mandar['mensaje'] = 'NO SE PUDO CREAR LA EMPRESA, Detalles: '. mysqli_error($bd). 'QUE PASO';
+    $mandar['mensaje'] = 'NO SE PUDO CREAR LA EMPRESA, Detalles: '. mysqli_error($bd);
     $mandar['result'] = false;
     echo json_encode($mandar);
   }
