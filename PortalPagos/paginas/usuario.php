@@ -63,7 +63,7 @@
 
           <v-app-bar-nav-icon>
             <v-btn @click="cargarPantallaIngresoDinero()">
-              Ingresar Dinero
+              TRANSACCIONES 
             </v-btn>
 
 
@@ -71,13 +71,7 @@
           </v-app-bar-nav-icon>
           <v-spacer></v-spacer>
 
-          <v-app-bar-nav-icon>
-
-            <v-btn @click="mostrar = 5">
-              Retirar Dinero
-            </v-btn>
-
-          </v-app-bar-nav-icon>
+          
 
 
           <v-toolbar-title> {{usuario}} </v-toolbar-title>
@@ -160,7 +154,7 @@
 
           <v-img src="../images/sistema/desenfocado.jpeg">
             <center>
-              <v-toolbar-title> REALIZAR INGRESO DE DINERO A LA CUENTA</v-toolbar-title>
+              <v-toolbar-title> REALIZAR TRANSACCION DE DINERO A LA CUENTA</v-toolbar-title>
             </center>
 
             <center>
@@ -184,7 +178,7 @@
                       <v-responsive :aspect-ratio="16/9">
                         <v-img src="../images/sistema/fondo.jpg">
                           <v-form ref="form" v-model="valid" lazy-validation>
-                          <div> MENU PARA EL INGRESO DE PAGO</div>  <br>
+                          <div> MENU PARA LAS TRANSACCIONES DE DINERO</div>  <br>
                           <v-text-field v-model="montoIngresoDinero"  :rules="[
               () => !!montoIngresoDinero || 'El campo es requerido',
                 ]" type="number" label="Ingresa el monto de dinero" required></v-text-field>
@@ -201,7 +195,10 @@
 
                             <v-btn :disabled="!valid" color="success" class="mr-4" @click="realizarIngresoDinero">
                               REALIZAR INGRESO DE DINERO
-                            </v-btn>
+                            </v-btn> <br><br>
+                            <v-btn :disabled="!valid" color="blue" class="mr-4" @click="realizarRetiroDinero">
+                              REALIZAR RETIRO DE DINERO
+                            </v-btn><br><br>
 
                             <v-btn color="error" class="mr-4" @click="reset">
                               Borrar Datos
@@ -229,6 +226,7 @@
 
 
         </div>
+        
 
 
         <div v-else>
