@@ -96,7 +96,6 @@ new Vue({
       const url = "../php/inicioSesion.php"
       axios.post(url, formData).then(function (response) {
         if (response.data.result) {
-          alert(response.data.estado)
           if (response.data.estado === 'ACTIVO') {
             if (response.data.tipo == 'EMPRESA') {
               window.location.href = '../paginas/usuario.php?user=' + response.data.correo + '&key=' + response.data.key
