@@ -17,8 +17,9 @@ class ProductData {
 	public function getUnit(){ return UnitData::getById($this->unit_id);}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (short_name,code,name,description,image,price,link,category_id,unit_id,is_public,in_existence,is_featured,created_at,provider_id) ";
-		$sql .= "value (\"$this->short_name\",\"$this->code\",\"$this->name\",\"$this->description\",\"$this->image\",\"$this->price\",\"$this->link\",$this->category_id,$this->unit_id,$this->is_public,$this->in_existence,$this->is_featured,$this->created_at,$this->category_id)";
+		$user_id= $_SESSION['admin_id'];
+		$sql = "insert into ".self::$tablename." (short_name,code,name,description,image,price,link,category_id,unit_id,is_public,in_existence,is_featured,created_at,provider_id,user_id) ";
+		$sql .= "value (\"$this->short_name\",\"$this->code\",\"$this->name\",\"$this->description\",\"$this->image\",\"$this->price\",\"$this->link\",$this->category_id,$this->unit_id,$this->is_public,$this->in_existence,$this->is_featured,$this->created_at,$this->provider_id,$user_id)";
 		Executor::doit($sql);
 	}
 
