@@ -15,8 +15,9 @@ $statuses = StatusData::getAll();
 
           <div class="row">
           <div class="col-md-12">
-          <h1>Reporte de Ventas de Productos por Categoría</h1>
+          <h1>Reporte de Venta de Productos por Categoría</h1>
           </div>
+          <hr>
           </div>
 <form>
 <input type="hidden" name="view" value="sellreport">
@@ -63,15 +64,16 @@ $statuses = StatusData::getAll();
               
             </div>
             <div class="col-md-2">
+            <br>
             <input type="submit" value="Generar" class="btn btn-primary">
             </div>
 
             </div>
             </form>
 <br>
-<?php if(isset($_GET["start_at"]) && isset($_GET["finish_at"]) && $_GET["start_at"]!=""&&$_GET["finish_at"]!=""):
-$start_at = strtotime($_GET["start_at"]);
-$finish_at = strtotime($_GET["finish_at"]);
+<?php if(isset($_GET["name-product"]) && isset($_GET["category-id"]) && $_GET["name-product"]!=""&&$_GET["category-id"]!=""):
+$start_at = strtotime($_GET["name-product"]);
+$finish_at = strtotime($_GET["category-id"]);
 
 ?>
 <div class="box box-primary">
@@ -85,7 +87,7 @@ echo "var dates=Array();";
 echo "var data=Array();";
 echo "var total=Array();";
 for($i=$start_at;$i<=$finish_at;$i+=(60*60*24)){
-  $operations = BuyData::getAllByDate(date("Y-m-d",$i));
+  $operations = BuyData::getAll();
   $total=0;
   foreach ($operations as $buy) {
     $opxs = BuyProductData::getAllByBuyId($buy->id);
