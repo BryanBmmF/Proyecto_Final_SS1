@@ -107,6 +107,7 @@ class BuyData {
 	public static function getAllByClientId($id){
 		$sql = "select * from ".self::$tablename." where client_id=$id order by created_at desc";
 		$query = Executor::doit($sql);
+		//print "<script>alert('SQL:$sql');</script>";	
 		return Model::many($query[0],new BuyData());
 	}
 
@@ -115,6 +116,21 @@ class BuyData {
 		$sql = "select * from ".self::$tablename." where is_public=1";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new BuyData());
+	}
+
+	//Busqueda de productos mas vendidos
+	public static function getProductosMasVendidos(){
+		$rawdata = array(); //creamos un array
+		$con = Database::getCon();
+		$sql = "select * from ".self::$tablename." where client_id=2 order by created_at desc";
+		$result =$con->query($sql);
+		while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$rawdata[] = $row;
+			print($row['code']);
+		}
+		$jas=json_encode($rawdata);
+		//print "<script>alert('SQL:$rawdata[0]');</script>";	
+		return $jas;
 	}
 
 }
