@@ -52,9 +52,18 @@ if(isset($_SESSION["admin_id"]) && $_SESSION["admin_id"]!=""):
           </ul>
           <ul class="nav navbar-nav side-nav">
           <li><a href="./"><i class="fa fa-home"></i> Inicio</a></li>
-          <li><a href="index.php?view=products"><i class="fa fa-glass"></i> Productos</a></li>
+          <li><a href="index.php?view=products"><i class="fa fa-shopping-bag"></i> Productos</a></li>
           <li><a href="index.php?view=sells"><i class="fa fa-shopping-cart"></i> Ventas</a></li>
-          <li><a href="index.php?view=sellreport"><i class="fa fa-area-chart"></i> Reportes</a></li>
+          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-th-list"></i> Reportes</a>
+            <!-- agregando menu desplegable de reportes del sistema 
+              icons disponibles en: https://fontawesome.com/v4.7.0/icons/
+            -->
+            <ul class="dropdown-menu"> 
+              <li><a href="index.php?view=sellreport"><i class="fa fa-cart-arrow-down"></i> Ventas generales</a></li>
+              <li><a href="index.php?view=sellreport-category"><i class="fa fa-table"></i> Ventas por Producto</a></li>
+              
+            </ul>
+          </li>
           <li><a href="index.php?view=clients"><i class="fa fa-male"></i> Clientes</a></li>
           <li><a href="index.php?view=categories"><i class="fa fa-th-list"></i> Categorias</a></li>
           <li><a href="index.php?view=providers"><i class="fa fa-users"></i> Proveedores</a></li>
