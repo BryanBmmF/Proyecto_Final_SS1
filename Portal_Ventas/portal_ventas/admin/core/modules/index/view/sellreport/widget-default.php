@@ -24,9 +24,7 @@ $statuses = StatusData::getAll();
             <div class="col-lg-2">
             <!--<select class="form-control" name="paymethod_id">
               <option> -- METODO --</option>
-              <?php foreach($paymethods as $pay):?>
-                <option value="<?php echo $pay->id; ?>"><?php echo $pay->name; ?></option>
-                <?php endforeach; ?>
+
             </select>-->
             </div>
             <div class="col-lg-2">
