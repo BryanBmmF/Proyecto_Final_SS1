@@ -1,178 +1,125 @@
-<?php
-$buys = array();
-if(isset($_GET["start_at"]) && isset($_GET["finish_at"])){
-$buys =  BuyData::getByRange($_GET["start_at"],$_GET["finish_at"]);
 
-}else{
-$buys =  BuyData::getAll();
-
-}
-$paymethods = PaymethodData::getAll();
-$statuses = StatusData::getAll();
-
-?>
         <!-- Main Content -->
 
           <div class="row">
           <div class="col-md-12">
-          <h1>Reporte de Ventas de Productos por Categoría</h1>
+          <h1>Reporte de Venta de Productos </h1>
           </div>
+          <hr>
           </div>
-<form>
+
 <input type="hidden" name="view" value="sellreport">
           <div class="row">
-            <div class="col-lg-2">
-            <!--<select class="form-control" name="paymethod_id">
-              <option> -- METODO --</option>
-              <?php foreach($paymethods as $pay):?>
-                <option value="<?php echo $pay->id; ?>"><?php echo $pay->name; ?></option>
-                <?php endforeach; ?>
-            </select>-->
-            </div>
-            <div class="col-lg-2">
-            <!--<select class="form-control" name="status_id">
-              <option> -- ESTADO --</option>
-              <?php foreach($statuses as $pay):?>
-                <option value="<?php echo $pay->id; ?>"><?php echo $pay->name; ?></option>
-                <?php endforeach; ?>
-            </select>-->
-            </div>
+            
             <div class="col-lg-3">
             <label for="inputState">Nombre de Producto: </label>
-            <input placeholder="Escriba el nombre del producto" type="text" name="name-product" class="form-control">
+            <input placeholder="Escriba el nombre del producto, codigo o descripcion" type="text" name="nameproduct" id="nameproduct" class="form-control">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
               <label for="inputState">Categoría: </label>
 
               <?php
                 $categories = CategoryData::getAll();
                  if(count($categories)>0):
               ?>
-                <select name="category_id" class="form-control" required>
+                <select name="category_id" id="category_id" class="form-control" required>
+                <!--
+                  <option value="n">-- SELECCIONE CATEGORIA --</option>
+                -->
+                
                   <?php foreach($categories as $cat):?>
                   <option value="<?php echo $cat->id; ?>"><?php echo $cat->name; ?></option>
                   <?php endforeach; ?>
                 </select>
                   <?php endif; ?>
-              <!-- 
-                <select id="inputState" class="form-control">
-                <option selected>Choose...</option>
-                <option>...</option>
-              </select>
-              -->
               
             </div>
             <div class="col-md-2">
-            <input type="submit" value="Generar" class="btn btn-primary">
+              <label for="inputState">Proveedor: </label>
+              <?php
+                $providers = ProviderData::getAll();
+                if(count($providers)>0):
+              ?>
+                <select name="provider_id" id="provider_id" class="form-control" required>
+                <!--
+                    <option value="n">-- SELECCIONE PROVEEDOR --</option>
+                -->
+                
+                  <?php foreach($providers as $cat):?>
+                    <option value="<?php echo $cat->id; ?>"><?php echo $cat->nombre; ?></option>
+                  <?php endforeach; ?>
+                </select>
+              <?php endif; ?>
             </div>
-
             </div>
-            </form>
-<br>
-<?php if(isset($_GET["start_at"]) && isset($_GET["finish_at"]) && $_GET["start_at"]!=""&&$_GET["finish_at"]!=""):
-$start_at = strtotime($_GET["start_at"]);
-$finish_at = strtotime($_GET["finish_at"]);
-
-?>
-<div class="box box-primary">
-<div id="graph" class="animate" data-animate="fadeInUp" ></div>
-</div>
-<script>
-
-<?php 
-echo "var c=0;";
-echo "var dates=Array();";
-echo "var data=Array();";
-echo "var total=Array();";
-for($i=$start_at;$i<=$finish_at;$i+=(60*60*24)){
-  $operations = BuyData::getAllByDate(date("Y-m-d",$i));
-  $total=0;
-  foreach ($operations as $buy) {
-    $opxs = BuyProductData::getAllByBuyId($buy->id);
-    foreach($opxs as $op){
-      $product = $op->getProduct();
-      $total += ($op->q*$product->price);
-    }
-  }
-//  echo $operations[0]->t;
-//  $sl = $operations[0]->t!=null?$operations[0]->t:0;
- // $sp = $spends[0]->t!=null?$spends[0]->t:0;
-  echo "dates[c]=\"".date("Y-m-d",$i)."\";";
-  echo "data[c]=".$total.";";
-  echo "total[c]={x: dates[c],y: data[c]};";
-  echo "c++;";
-}
-?>
-// Use Morris.Area instead of Morris.Line
-Morris.Area({
-  element: 'graph',
-  data: total,
-  xkey: 'x',
-  ykeys: ['y',],
-  labels: ['Y']
-}).on('click', function(i, row){
-  console.log(i, row);
-});
-</script>
-<?php endif;?>
+           
 <br>
 
           <div class="row">
             <div class="col-lg-12">
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <i class="fa fa-tasks"></i> Reporte de Ventas
+                  <i class="fa fa-tasks"></i> Reporte de Productos Vendidos
                 </div>
                 <div class="widget-body medium no-padding">
 
-                  <div class="table-responsive">
-<?php if(count($buys)>0):?>
-                    <table class="table table-bordered">
-                    <thead>
-                      <th></th>
-                      <th>Operacion</th>
-                      <th>Cliente</th>
-                      <th>SubTotal</th>
-                      <th>Descuento</th>
-                      <th>Total</th>
-                      <th>Metodo de pago</th>
-                      <th>Estado</th>
-                      <th>Fecha</th>
-                    </thead>
-<?php foreach($buys as $b):
-$discount=0;
-?>
-                        <tr>
-                        <td><a href="index.php?view=openbuy&buy_id=<?php echo $b->id; ?>" class="btn btn-xs btn-default">Detalles</a></td>
-                        <td>#<?php echo $b->id; ?></td>
-                        <td><?php echo $b->getClient()->getFullname(); ?></td>
-    <td>$ <?php echo number_format($b->getTotal(),2,".",","); ?></td>
-    <td>$
-      <?php if($b->coupon_id!=null){
-        $coupon = CouponData::getById($b->coupon_id);
-        $discount = $coupon->val;
-        echo number_format($discount,2,".",",");
-        }else{
-        echo number_format($discount,2,".",",");
-
-        }
-      ?>
-    </td>
-    <td>$ <?php echo number_format($b->getTotal()-$discount,2,".",","); ?></td>
-                        <td><?php echo $b->getPaymethod()->name; ?></td>
-                        <td><?php echo $b->getStatus()->name; ?></td>
-                        <td><?php echo $b->created_at; ?></td>
-                        </tr>
-<?php endforeach; ?>
-                    </table>
-<?php else:?>
-  <div class="panel-body">
-  <h1>No hay operaciones</h1>
-  </div>
-<?php endif; ?>
+                  <div class="table-responsive" id="result">
+                      <!--Resultado de la tabla-->
                   </div>
                 </div>
               </div>
             </div>
 
           </div>
+
+          <script>
+		/*1. script de llenado de tabla con id=result */	
+		$(document).ready(function () {
+          //var category_id = document.getElementById("category_id").value;
+          //var provider_id = document.getElementById("provider_id").value;
+          
+			//obteniendo los datos de bd
+			function obtener_datos(consulta,category_id,provider_id){
+        var dataString = 'category_id=' + category_id + '&provider_id=' + provider_id+ '&consulta=' + consulta;
+				$.ajax({
+					//type: "method",
+					url: "load_report_products.php",
+          //solo por get funciono en este sitio web por post no da ajax
+					method: "GET",
+					data: dataString,
+					//dataType: "dataType",
+					success: function (data) {
+						$("#result").html(data)
+					},
+
+          // código a ejecutar si la petición falla;
+          // son pasados como argumentos a la función
+          // el objeto de la petición en crudo y código de estatus de la petición
+          error : function(xhr, status) {
+              alert('Disculpe, existió un problema');
+          }
+        })
+
+			}
+			obtener_datos();
+
+
+      /*2. filtar busqueda por campo ingresado*/
+      $(document).on("keyup","#nameproduct", function () {
+			//obteniendo el valor que se puso en campo identifier
+			var valor = $(this).val();
+      var category_id = document.getElementById("category_id").value;
+      var provider_id = document.getElementById("provider_id").value;
+        	//condición de campo no vacio
+        	if (valor!= "") {
+                obtener_datos(valor,category_id,provider_id); //busqueda en base al valor
+        	} else {
+				obtener_datos(); //desplegar todo
+			}
+
+			})
+			
+
+		});
+
+	</script>

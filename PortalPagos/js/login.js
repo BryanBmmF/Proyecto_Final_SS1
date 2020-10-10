@@ -99,7 +99,7 @@ new Vue({
           if (response.data.estado === 'ACTIVO') {
             if (response.data.tipo == 'EMPRESA') {
               window.location.href = '../paginas/usuario.php?user=' + response.data.correo + '&key=' + response.data.key
-            } else if (response.data.tipo == 'ADMINISTRADOR') {
+            } else if (response.data.tipo == 'ADMINISTRACION') {
               window.location.href = './administrador.php?user=' + response.data.correo+ '&key=' + response.data.key
             } else {
               window.location.href = '../paginas/login.html'
@@ -274,5 +274,16 @@ TARJETA DE CREDITO
 5555555555555
 2024-10-01
 894
+
+CUENTA BANCARIA
+86950799 
+7bud39v6 
+8334721855 
+
+TARJETA CREDITO
+1268498322135127
+9090909090909
+848
+2020-10-08 
 
 */

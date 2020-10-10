@@ -40,20 +40,7 @@ new Vue({
     valid2: false,
     valid4: true,
 
-    //DASHBOARD
-    mostrarDashboard: 0,
-    anunciosDashboard: [],
-    hitosDashboard: [],
-    comentariosHitos: [],
-    escribirComentarioHitos: [],
-    botonesMostrarComentarios: [],
-    variableAuxiliarIdHito: '',
-
-
-
-
-
-
+    
     icons: ['mdi-rewind', 'mdi-play', 'mdi-fast-forward'],
 
     //cosas del portal de pagos
@@ -73,7 +60,100 @@ new Vue({
     montoRetiroDinero: 300,
 
     tasaInteres: 0.013,
-    
+
+    //tabla datos
+    filtroInicioFecha: '',
+    filtroFinFecha: '',
+    filtroTransaccionesFinancieras: '',
+    filtroTransaccionesInternas: '',
+    cierreFinanciero:0,
+    cierreInterno:0,
+    cierreTotal:0,
+    impuestos:0,
+
+    headerTransaccionesInternas: [
+      {
+        text: 'ID',
+        align: 'start',
+        filterable: true,
+        value: 'id',
+      },
+      { text: 'Monto', value: 'monto_total' },
+      { text: 'Cuenta Emisora', value: 'cuenta_emisora' },
+      { text: 'Cuenta Receptora', value: 'cuenta_receptora' },
+      { text: 'Descripcion', value: 'descripcion' },
+      { text: 'Fecha', value: 'fecha_transaccion' },
+    ],
+
+
+    headerTransaccionesFinancieras: [
+      {
+        text: 'ID',
+        align: 'start',
+        filterable: false,
+        value: 'id',
+      },
+      { text: 'Cuenta', value: 'cuenta_involucrada' },
+      { text: 'Monto', value: 'monto' },
+      { text: 'Impuestos', value: 'impuestos' },
+      { text: 'Total', value: 'total' },
+      { text: 'Tipo', value: 'tipo' },
+      { text: 'Fecha', value: 'fecha_transaccion' },
+      { text: 'Metodo', value: 'tipo_metodo_pago' },
+      { text: 'Numero Metodo', value: 'numero_metodo_pago' },
+      { text: 'Numero Transaccion Portal Financiero', value: 'numero_transaccion_portal_financiero' },
+    ],
+
+    datosTransaccionesFinancieras: [],
+    datosTransaccionesInternas: [],
+
+
+    //hasta aqui tabla
+
+    //metodo pago secundario
+    mostrarPerfil:1,
+    mostrarMetodoFinanciero: 1,
+    show2: false,
+
+    contrasenaFormRules: [
+      v => (v && v.length <= 35) || 'La Contrasena tiene que tener maximo 35 caracteres',
+    ],
+
+     //datos usuario financiero
+     esValidoMetodoPago: false,
+     tipoMetodoPagoValidado:'',
+     numeroMetodoPagoValidado:'',
+     mensajeValidacionMetodo: 'NO SE HA VALIDADO EL METODO DE PAGO',
+     usuarioFinancieroCuentaForm: '',
+     noCuentaUsuarioFinancieroCuentaForm: '',
+     contrasenaUsuarioFinancieroCuentaForm: '',
+     usuarioFinancieroCuentaFormRules: [
+       v => (v && v.length <= 8) || 'El usuario financiero tiene que tener maximo 8 caracteres',
+     ],
+     noCuentaUsuarioFinancieroCuentaFormRules: [
+       v => (v && v.length <= 10) || 'El numero de cuenta del portal financiero tiene que tener maximo 10 caracteres',
+     ],
+ 
+     // datos tarjeta financiero
+     numeroTarjetaForm: '',
+     numeroTarjetaFormRules: [
+       v => (v && v.length <= 16) || 'El numero de tarjeta tiene que tener maximo 16 caracteres',
+     ],
+     dpiTarjetaForm: '',
+     dpiTarjetaFormRules: [
+       v => (v && v.length <= 13) || 'El dpi del CuentaHabiente tiene que tener maximo 13 caracteres',
+     ],
+     codigoCVCTarjetaForm: '',
+     codigoCVCTarjetaFormRules: [
+       v => (v && v.length <= 3) || 'El codigo CVC que tener maximo 3 caracteres',
+     ],
+     fechaVencimientoTarjetaForm: '2020-01-01',
+ 
+     //
+ 
+
+    //
+
 
 
   },
@@ -303,7 +383,188 @@ new Vue({
         console.log(error)
       })
     },
+    reiniciarFechas: function () {
+      this.filtroInicioFecha = ''
+      this.filtroFinFecha = ''
+    },
+    filtrarTransacciones() {
+      this.cierreFinanciero=0
+      this.cierreInterno=0
+      this.impuestos=0
+      this.cierreTotal=0
+      this.obtenerTransaccionesFinancieras()
+      this.obtenerTransaccionesInternas()
+      this.cierreTotal= parseFloat(this.cierreFinanciero) + parseFloat(this.cierreInterno)
+
+    },
+
+    obtenerTransaccionesInternas() {
+      let formData = new FormData()
+      formData.append('usuario', this.usuario)
+      formData.append('fechaInicio', this.filtroInicioFecha)
+      formData.append('fechaFin', this.filtroFinFecha)
+      formData.append('tipo', 'PERSONAL')
+      axios.post('../php/obtenerTransaccionesInternas.php', formData)
+        .then((response) => {
+          if (response.data.result) {
+            this.datosTransaccionesInternas = response.data.datos
+            for (var i = 0; i < response.data.datos.length; i+=1) {
+
+              if(response.data.datos[i].cuenta_receptora == this.usuario){
+                this.cierreInterno = parseFloat(this.cierreInterno) + parseFloat(response.data.datos[i].monto_total)
+              }else{
+                this.cierreInterno = parseFloat(this.cierreInterno) - parseFloat(response.data.datos[i].monto_total)
+                
+              }
+            }
+          } else {
+            alert(response.data.mensaje)
+          }
+
+        })
+        .catch((error) => {
+          alert(error)
+        })
+    },
+    obtenerTransaccionesFinancieras() {
+      let formData = new FormData()
+      formData.append('usuario', this.usuario)
+      formData.append('fechaInicio', this.filtroInicioFecha)
+      formData.append('fechaFin', this.filtroFinFecha)
+      formData.append('tipo', 'PERSONAL')
+      axios.post('../php/obtenerTransaccionesFinancieras.php', formData)
+        .then((response) => {
+          if (response.data.result) {
+            this.datosTransaccionesFinancieras = response.data.datos
+            for (var i = 0; i < response.data.datos.length; i+=1) {
+              if(response.data.datos[i].tipo == 'ACREDITACION'){
+                this.cierreFinanciero = parseFloat(this.cierreFinanciero) + parseFloat(response.data.datos[i].total)
+              }else{
+                this.cierreFinanciero = parseFloat(this.cierreFinanciero) - parseFloat(response.data.datos[i].total)
+                this.impuestos = parseFloat(this.impuestos) + parseFloat(response.data.datos[i].impuestos)
+              }
+             
+            }
+          } else {
+            alert(response.data.mensaje)
+          }
+
+        })
+        .catch((error) => {
+          alert(error)
+        })
+    },
+    validarMetodoPago() {
+
+      if (this.mostrarMetodoFinanciero === 1) {
+          
+        let formData = new FormData()
+          formData.append("metodoPago",'CUENTA')
+          formData.append("usuarioFinanciero", this.usuarioFinancieroCuentaForm)
+          formData.append("contrasenaUsuarioFinanciero", this.contrasenaUsuarioFinancieroCuentaForm)
+          formData.append("noCuenta", this.noCuentaUsuarioFinancieroCuentaForm)
+          
+          //usar url externa
+          const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
+          axios.post(url, formData).then( (response) => {
+            if (response.data.result) {
+              
+              alert(response.data.mensaje)
+              this.mensajeValidacionMetodo = response.data.mensaje
+              this.tipoMetodoPagoValidado = response.data.tipoMetodoPago
+              this.numeroMetodoPagoValidado = response.data.numeroCuenta
+              this.esValidoMetodoPago = true
+              this.registrarMetodoPagoSecundario()
+
+              //alert(response.data.mensaje)
+              //respuesta del servidor
+            } else {
+              alert(response.data.mensaje)
+              this.mensajeValidacionMetodo = response.data.mensaje
+              this.tipoMetodoPagoValidado = ''
+              this.numeroMetodoPagoValidado = ''
+              this.esValidoMetodoPago = false
+              
+            }
+          }).catch((error) =>{
+            console.log(error)
+            alert("Surgio un error al intentar enviar la peticion de validar metodo de pago por favor prueba otra vez, si el error persiste prueba mas tarde")
+              this.mensajeValidacionMetodo = error
+              this.tipoMetodoPagoValidado = ''
+              this.numeroMetodoPagoValidado = ''
+              this.esValidoMetodoPago = false
+            
+          })
+
+      
+
+        
+      } else if (this.mostrarMetodoFinanciero === 2) {
+
+        let formData = new FormData()
+        formData.append("metodoPago",'TARJETA')
+        formData.append("noTarjeta", this.numeroTarjetaForm)
+        formData.append("dpi", this.dpiTarjetaForm)
+        formData.append("fechaVencimiento", this.fechaVencimientoTarjetaForm)
+        formData.append("codigoCVC", this.codigoCVCTarjetaForm)
+        //usar url externa
+        const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
+        axios.post(url, formData).then( (response) =>{
+          if (response.data.result) {
+            alert(response.data.mensaje)
+            this.mensajeValidacionMetodo = response.data.mensaje
+            this.tipoMetodoPagoValidado = response.data.tipoMetodoPago
+            this.numeroMetodoPagoValidado = response.data.numeroCuenta
+            this.esValidoMetodoPago = true
+            this.registrarMetodoPagoSecundario()
+          } else {
+            alert(response.data.mensaje)
+            this.mensajeValidacionMetodo = response.data.mensaje
+            this.tipoMetodoPagoValidado = ''
+            this.numeroMetodoPagoValidado = ''
+            this.esValidoMetodoPago = false
+            
+          }
+        }).catch((error) =>{
+          console.log(error)
+          alert("Surgio un error al intentar enviar la peticion de validar metodo de pago por favor prueba otra vez, si el error persiste prueba mas tarde")
+              this.mensajeValidacionMetodo = error
+              this.tipoMetodoPagoValidado = ''
+              this.numeroMetodoPagoValidado = ''
+              this.esValidoMetodoPago = false
+        })
+        
+      }
+    },
+    registrarMetodoPagoSecundario() {
+          let formData = new FormData()
+          formData.append("tipoMetodoPago", this.tipoMetodoPagoValidado)
+          formData.append("numeroMetodoPago", this.numeroMetodoPagoValidado)
+          formData.append("usuario", this.usuario)
+          const url = "../php/metodoPagoAlternativo.php"
+          axios.post(url, formData).then( (response) =>{
+            if (response.data.result) {
+              alert(response.data.mensaje)
+              if(this.tipoMetodoPagoValidado === 'CUENTA'){
+                this.cuentaFinanciera = this.numeroMetodoPagoValidado
+              }else{
+                this.tarjetaCredito = this.numeroMetodoPagoValidado
+              }
+            } else {
+              alert(response.data.mensaje)
+            }
+          }).catch((error) => {
+            console.log(error)
+            alert("Surgio un error al intentar enviar la peticion de registrar un metodo de pago alternativo")
+          })
+
+        
+      
+    },
+
   },
 
   vuetify: new Vuetify(),
 })
+// INSERT INTO TRANSACCION_INTERNA VALUES(null,300,'juan.1@JPMAZATE.com','juanito.1@JPMAZATE.com','Pago tienda',now());
+//INSERT INTO TRANSACCION_INTERNA VALUES(null,300,'juanito.1@JPMAZATE.com','juan.1@JPMAZATE.com','Pago tienda',now());
