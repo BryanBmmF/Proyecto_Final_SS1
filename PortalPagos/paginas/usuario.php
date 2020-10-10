@@ -88,12 +88,18 @@
         <div v-if="mostrar === 2">
 
 
-          <v-img src="../images/sistema/desenfocado2.jpeg">
+          <v-img src="../images/sistema/fondo.jpg">
             <center>
               <v-toolbar-title> PORTAL DE PAGOS</v-toolbar-title>
             </center>
 
             <center>
+              <v-btn @click="mostrarPerfil = 1">
+                Mostrar Perfil
+              </v-btn>
+              <v-btn @click="mostrarPerfil = 2">
+                Registrar Metodo de Pago Alternativo
+              </v-btn>
               <v-card width="300" height="300">
                 <v-avatar class="profile" color="grey" size="300" tile>
                   <v-img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" />
@@ -105,41 +111,99 @@
             <center>
 
 
-              <v-container class="pa-4 text-center">
-                <v-row class="fill-height" align="center" justify="center">
+              <div v-if="mostrarPerfil === 1">
 
 
-                  <v-hover v-slot:default="{ hover }">
-                    <v-card :elevation="hover ? 15 : 2" class="scroll">
-                      <v-responsive :aspect-ratio="16/9">
-                        <v-img src="../images/sistema/fondo.jpg">
-                          <v-card-title class="title black--text">
-                            BIENVENIDO A TU PERFIL DEL PORTAL DE PAGOS
-                          </v-card-title>
-                          <v-card-title class="title black--text">
-                            DATOS DE LA CUENTA DEL CORREO: {{usuario}}
-                          </v-card-title><br>
-                          <v-card-subtitle class="pb-0">Correo: {{usuario}}</v-card-subtitle>
-                          <v-card-subtitle class="pb-0">Saldo: Q{{saldo}}</v-card-subtitle>
-                          <v-card-subtitle class="pb-0">Nombre Completo: {{nombreCompleto}}</v-card-subtitle>
-                          <v-card-subtitle class="pb-0">Codigo Empresa: {{codigoEmpresa}}</v-card-subtitle>
-                          <v-card-subtitle class="pb-0">Empresa: {{empresa}}</v-card-subtitle>
-                          <v-card-subtitle class="pb-0">Tipo Usuario: {{tipoUsuario}}</v-card-subtitle>
-                          <v-card-subtitle class="pb-0">Tarjeta Credito: {{tarjetaCredito}}</v-card-subtitle>
-                          <v-card-subtitle class="pb-0">Cuenta Financiera: {{cuentaFinanciera}}</v-card-subtitle>
-                          <v-card-subtitle class="pb-0">Estado Cuenta: {{estadoCuenta}}</v-card-subtitle>
-
-                        </v-img>
-                      </v-responsive>
-
-                    </v-card>
-                  </v-hover>
+                <v-container class="pa-4 text-center">
+                  <v-row class="fill-height" align="center" justify="center">
 
 
-                </v-row>
-              </v-container>
+                    <v-hover v-slot:default="{ hover }">
+                      <v-card :elevation="hover ? 15 : 2" class="scroll">
+                        <v-responsive :aspect-ratio="16/9">
+                          <v-img src="../images/sistema/fondo.jpg">
+                            <v-card-title class="title black--text">
+                              BIENVENIDO A TU PERFIL DEL PORTAL DE PAGOS
+                            </v-card-title>
+                            <v-card-title class="title black--text">
+                              DATOS DE LA CUENTA DEL CORREO: {{usuario}}
+                            </v-card-title><br>
+                            <v-card-subtitle class="pb-0">Correo: {{usuario}}</v-card-subtitle>
+                            <v-card-subtitle class="pb-0">Saldo: Q{{saldo}}</v-card-subtitle>
+                            <v-card-subtitle class="pb-0">Nombre Completo: {{nombreCompleto}}</v-card-subtitle>
+                            <v-card-subtitle class="pb-0">Codigo Empresa: {{codigoEmpresa}}</v-card-subtitle>
+                            <v-card-subtitle class="pb-0">Empresa: {{empresa}}</v-card-subtitle>
+                            <v-card-subtitle class="pb-0">Tipo Usuario: {{tipoUsuario}}</v-card-subtitle>
+                            <v-card-subtitle class="pb-0">Tarjeta Credito: {{tarjetaCredito}}</v-card-subtitle>
+                            <v-card-subtitle class="pb-0">Cuenta Financiera: {{cuentaFinanciera}}</v-card-subtitle>
+                            <v-card-subtitle class="pb-0">Estado Cuenta: {{estadoCuenta}}</v-card-subtitle>
+
+                          </v-img>
+                        </v-responsive>
+
+                      </v-card>
+                    </v-hover>
+
+
+                  </v-row>
+                </v-container>
+              </div>
+              <div v-else-if="mostrarPerfil === 2">
+                <center>
+                  <v-toolbar-title center>PARA CREAR UNA CUENTA EN EL PORTAL DE PAGOS DEBES DE INICIAR SESION EN UNA CUENTA DEL PORTAL FINANCIERO</v-toolbar-title>
+                </center>
+                <br>
+                <v-btn color="yellow" class="mr-4" @click="mostrarMetodoFinanciero = 1">
+                  Usar Cuenta Bancaria
+                </v-btn>
+
+                <v-btn color="red" class="mr-4" @click="mostrarMetodoFinanciero = 2">
+                  Usar Tarjeta de Credito
+                </v-btn>
+
+                <div v-if="mostrarMetodoFinanciero === 1">
+
+                  <div>
+                    INICIA SESION CON TU CUENTA EN EL PORTAL FINANCIERO
+                  </div><br>
+                  <v-text-field v-model="usuarioFinancieroCuentaForm" :counter="8" :rules="usuarioFinancieroCuentaFormRules" label="Usuario en el portal financiero" hint="Maximo 8 caracteres" counter required></v-text-field>
+
+
+                  <v-text-field v-model="contrasenaUsuarioFinancieroCuentaForm" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" :type="show2 ? 'text' : 'password'" :rules="contrasenaFormRules" label="Contrasena de cuenta en el portal financiero" @click:append="show2 = !show2" required></v-text-field>
+
+                  <v-text-field v-model="noCuentaUsuarioFinancieroCuentaForm" :counter="10" :rules="noCuentaUsuarioFinancieroCuentaFormRules" label="Numero de Cuenta en el portal financiero" hint="Maximo 10 caracteres" counter required></v-text-field>
+
+
+                </div>
+                <div v-else-if="mostrarMetodoFinanciero === 2">
+                  <div>
+                    UTILIZA TU TARJETA DE CREDITO DEL PORTAL FINANCIERO
+                  </div><br>
+
+                  <v-text-field v-model="numeroTarjetaForm" :counter="16" :rules="numeroTarjetaFormRules" label="Numero de tarjeta" hint="Maximo 16 caracteres" type="number" counter required></v-text-field>
+
+
+                  <v-text-field v-model="dpiTarjetaForm" :counter="13" :rules="dpiTarjetaFormRules" label="Dpi CuentaHabiente" hint="Maximo 13 caracteres" type="number" counter required></v-text-field>
+
+                  <v-text-field v-model="codigoCVCTarjetaForm" :counter="3" :rules="codigoCVCTarjetaFormRules" label="Codigo CVC" hint="Maximo 3 caracteres" type="number" counter required></v-text-field>
+
+                  <div> Fecha Vencimiento</div>
+                  <v-date-picker label="Fecha de Vencimiento por favor" v-model="fechaVencimientoTarjetaForm" class="mt-4" min="1900-01-01" max="2040-01-01"></v-date-picker>
+
+                </div>
+
+                <v-btn color="green" class="mr-4" @click="validarMetodoPago">
+                  VALIDAR METODO DE PAGO
+                </v-btn>
+                <div> <br>
+                  {{mensajeValidacionMetodo}} <br>
+                  METODO DE PAGO: {{tipoMetodoPagoValidado}} <br>
+                  NUMERO: {{numeroMetodoPagoValidado}} <br>
+                </div>
+              </div>
 
             </center>
+
 
 
 
@@ -179,10 +243,10 @@
 
             <center>
 
-            <v-toolbar-title> Subtotal Transacciones Financieras Q{{cierreFinanciero}} </v-toolbar-title>
-            <v-toolbar-title> Subtotal Transacciones Internas Q{{cierreInterno}} </v-toolbar-title>
-            <v-toolbar-title> Total Final Q{{cierreTotal}} </v-toolbar-title>
-            <v-toolbar-title> Impuestos cobrados Q{{impuestos}} </v-toolbar-title>
+              <v-toolbar-title> Subtotal Transacciones Financieras Q{{cierreFinanciero}} </v-toolbar-title>
+              <v-toolbar-title> Subtotal Transacciones Internas Q{{cierreInterno}} </v-toolbar-title>
+              <v-toolbar-title> Total Final Q{{cierreTotal}} </v-toolbar-title>
+              <v-toolbar-title> Impuestos cobrados Q{{impuestos}} </v-toolbar-title>
 
               <v-container class="pa-4 text-center" fill-height fluid align="center">
                 <v-row class="fill-height" align="center">

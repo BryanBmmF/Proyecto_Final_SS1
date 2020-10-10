@@ -40,20 +40,7 @@ new Vue({
     valid2: false,
     valid4: true,
 
-    //DASHBOARD
-    mostrarDashboard: 0,
-    anunciosDashboard: [],
-    hitosDashboard: [],
-    comentariosHitos: [],
-    escribirComentarioHitos: [],
-    botonesMostrarComentarios: [],
-    variableAuxiliarIdHito: '',
-
-
-
-
-
-
+    
     icons: ['mdi-rewind', 'mdi-play', 'mdi-fast-forward'],
 
     //cosas del portal de pagos
@@ -122,6 +109,50 @@ new Vue({
 
 
     //hasta aqui tabla
+
+    //metodo pago secundario
+    mostrarPerfil:1,
+    mostrarMetodoFinanciero: 1,
+    show2: false,
+
+    contrasenaFormRules: [
+      v => (v && v.length <= 35) || 'La Contrasena tiene que tener maximo 35 caracteres',
+    ],
+
+     //datos usuario financiero
+     esValidoMetodoPago: false,
+     tipoMetodoPagoValidado:'',
+     numeroMetodoPagoValidado:'',
+     mensajeValidacionMetodo: 'NO SE HA VALIDADO EL METODO DE PAGO',
+     usuarioFinancieroCuentaForm: '',
+     noCuentaUsuarioFinancieroCuentaForm: '',
+     contrasenaUsuarioFinancieroCuentaForm: '',
+     usuarioFinancieroCuentaFormRules: [
+       v => (v && v.length <= 8) || 'El usuario financiero tiene que tener maximo 8 caracteres',
+     ],
+     noCuentaUsuarioFinancieroCuentaFormRules: [
+       v => (v && v.length <= 10) || 'El numero de cuenta del portal financiero tiene que tener maximo 10 caracteres',
+     ],
+ 
+     // datos tarjeta financiero
+     numeroTarjetaForm: '',
+     numeroTarjetaFormRules: [
+       v => (v && v.length <= 16) || 'El numero de tarjeta tiene que tener maximo 16 caracteres',
+     ],
+     dpiTarjetaForm: '',
+     dpiTarjetaFormRules: [
+       v => (v && v.length <= 13) || 'El dpi del CuentaHabiente tiene que tener maximo 13 caracteres',
+     ],
+     codigoCVCTarjetaForm: '',
+     codigoCVCTarjetaFormRules: [
+       v => (v && v.length <= 3) || 'El codigo CVC que tener maximo 3 caracteres',
+     ],
+     fechaVencimientoTarjetaForm: '2020-01-01',
+ 
+     //
+ 
+
+    //
 
 
 
@@ -422,6 +453,113 @@ new Vue({
         .catch((error) => {
           alert(error)
         })
+    },
+    validarMetodoPago() {
+
+      if (this.mostrarMetodoFinanciero === 1) {
+          
+        let formData = new FormData()
+          formData.append("metodoPago",'CUENTA')
+          formData.append("usuarioFinanciero", this.usuarioFinancieroCuentaForm)
+          formData.append("contrasenaUsuarioFinanciero", this.contrasenaUsuarioFinancieroCuentaForm)
+          formData.append("noCuenta", this.noCuentaUsuarioFinancieroCuentaForm)
+          
+          //usar url externa
+          const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
+          axios.post(url, formData).then( (response) => {
+            if (response.data.result) {
+              
+              alert(response.data.mensaje)
+              this.mensajeValidacionMetodo = response.data.mensaje
+              this.tipoMetodoPagoValidado = response.data.tipoMetodoPago
+              this.numeroMetodoPagoValidado = response.data.numeroCuenta
+              this.esValidoMetodoPago = true
+              this.registrarMetodoPagoSecundario()
+
+              //alert(response.data.mensaje)
+              //respuesta del servidor
+            } else {
+              alert(response.data.mensaje)
+              this.mensajeValidacionMetodo = response.data.mensaje
+              this.tipoMetodoPagoValidado = ''
+              this.numeroMetodoPagoValidado = ''
+              this.esValidoMetodoPago = false
+              
+            }
+          }).catch((error) =>{
+            console.log(error)
+            alert("Surgio un error al intentar enviar la peticion de validar metodo de pago por favor prueba otra vez, si el error persiste prueba mas tarde")
+              this.mensajeValidacionMetodo = error
+              this.tipoMetodoPagoValidado = ''
+              this.numeroMetodoPagoValidado = ''
+              this.esValidoMetodoPago = false
+            
+          })
+
+      
+
+        
+      } else if (this.mostrarMetodoFinanciero === 2) {
+
+        let formData = new FormData()
+        formData.append("metodoPago",'TARJETA')
+        formData.append("noTarjeta", this.numeroTarjetaForm)
+        formData.append("dpi", this.dpiTarjetaForm)
+        formData.append("fechaVencimiento", this.fechaVencimientoTarjetaForm)
+        formData.append("codigoCVC", this.codigoCVCTarjetaForm)
+        //usar url externa
+        const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
+        axios.post(url, formData).then( (response) =>{
+          if (response.data.result) {
+            alert(response.data.mensaje)
+            this.mensajeValidacionMetodo = response.data.mensaje
+            this.tipoMetodoPagoValidado = response.data.tipoMetodoPago
+            this.numeroMetodoPagoValidado = response.data.numeroCuenta
+            this.esValidoMetodoPago = true
+            this.registrarMetodoPagoSecundario()
+          } else {
+            alert(response.data.mensaje)
+            this.mensajeValidacionMetodo = response.data.mensaje
+            this.tipoMetodoPagoValidado = ''
+            this.numeroMetodoPagoValidado = ''
+            this.esValidoMetodoPago = false
+            
+          }
+        }).catch((error) =>{
+          console.log(error)
+          alert("Surgio un error al intentar enviar la peticion de validar metodo de pago por favor prueba otra vez, si el error persiste prueba mas tarde")
+              this.mensajeValidacionMetodo = error
+              this.tipoMetodoPagoValidado = ''
+              this.numeroMetodoPagoValidado = ''
+              this.esValidoMetodoPago = false
+        })
+        
+      }
+    },
+    registrarMetodoPagoSecundario() {
+          let formData = new FormData()
+          formData.append("tipoMetodoPago", this.tipoMetodoPagoValidado)
+          formData.append("numeroMetodoPago", this.numeroMetodoPagoValidado)
+          formData.append("usuario", this.usuario)
+          const url = "../php/metodoPagoAlternativo.php"
+          axios.post(url, formData).then( (response) =>{
+            if (response.data.result) {
+              alert(response.data.mensaje)
+              if(this.tipoMetodoPagoValidado === 'CUENTA'){
+                this.cuentaFinanciera = this.numeroMetodoPagoValidado
+              }else{
+                this.tarjetaCredito = this.numeroMetodoPagoValidado
+              }
+            } else {
+              alert(response.data.mensaje)
+            }
+          }).catch((error) => {
+            console.log(error)
+            alert("Surgio un error al intentar enviar la peticion de registrar un metodo de pago alternativo")
+          })
+
+        
+      
     },
 
   },
