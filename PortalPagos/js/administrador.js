@@ -371,3 +371,4 @@ var vm = new Vue({
   },
   vuetify: new Vuetify(),
 })
+//vista administrador finalizada
