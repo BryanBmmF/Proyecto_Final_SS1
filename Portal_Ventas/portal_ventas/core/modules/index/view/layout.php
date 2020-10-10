@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Katana Lite - Sistema de Tienda en Linea</title>
+  <title>J3B Shop - Tienda en Linea</title>
 
   <link rel="stylesheet" type="text/css" href="res/lib/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="res/lib/fontawesome/css/fontawesome.min.css">
@@ -17,7 +17,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 col-xs-5">
-      <br><h1>KATANA LITE</h1>
+      <br><h1>J3B Shop</h1>
       </div>
       <div class="col-md-7 col-xs-5">
 <br><br>
@@ -104,7 +104,7 @@ $cats = CategoryData::getPublics();
       <input class="form-control mr-sm-2" name="q" type="search" placeholder="Buscar ..." aria-label="Buscar ...">
       <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
 &nbsp;
-<a href="index.php?view=mycart" class="btn  btn-secondary my-2 my-sm-0"><i class="fa fa-shopping-cart"></i> 
+<a href="index.php?view=mycart" class="btn  btn-secondary my-2 my-sm-0"><i class="fa fa-shopping-cart"></i>
 <?php if(isset($_SESSION["cart"])):?>
 <span class="badge"><?php echo count($_SESSION["cart"]); ?></span>
 <?php endif; ?>
@@ -128,11 +128,7 @@ $cats = CategoryData::getPublics();
 <div class="row">
 <div class="col-md-12">
 <hr>
-<p><b>Katana Lite</b> &copy; 2019</p>
-<ul class="list-inline">
-<li class="list-inline-item"><p class="text-muted"> <a href="http://evilnapsis.com/">Evilnapsis</a></p></li>
-<li class="list-inline-item"><p class="text-muted"> <a href="http://evilnapsis.com/support/katana-documentation/">Documentacion</a></p></li>
-</ul>
+<p><b>J3B Shop</b> &copy; 2020</p>
 </div>
 </div>
 </div>
