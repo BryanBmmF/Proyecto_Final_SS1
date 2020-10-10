@@ -13,7 +13,7 @@
             
             <div class="col-lg-3">
             <label for="inputState">Nombre de Producto: </label>
-            <input placeholder="Escriba el nombre del producto" type="text" name="nameproduct" id="nameproduct" class="form-control">
+            <input placeholder="Escriba el nombre del producto, codigo o descripcion" type="text" name="nameproduct" id="nameproduct" class="form-control">
             </div>
             <div class="col-md-2">
               <label for="inputState">Categoría: </label>
@@ -72,49 +72,53 @@
 
           </div>
 
-  
-
-  <script>
+          <script>
 		/*1. script de llenado de tabla con id=result */	
 		$(document).ready(function () {
-          var category_id = document.getElementById("category_id").value;
-          var provider_id = document.getElementById("provider_id").value;
+          //var category_id = document.getElementById("category_id").value;
+          //var provider_id = document.getElementById("provider_id").value;
+          
 			//obteniendo los datos de bd
-			function obtener_datos(consulta){
+			function obtener_datos(consulta,category_id,provider_id){
+        var dataString = 'category_id=' + category_id + '&provider_id=' + provider_id+ '&consulta=' + consulta;
 				$.ajax({
 					//type: "method",
 					url: "load_report_products.php",
-					method: "POST",
-					data: {consulta: consulta, category_id: category_id, provider_id: provider_id},
+          //solo por get funciono en este sitio web por post no da ajax
+					method: "GET",
+					data: dataString,
 					//dataType: "dataType",
 					success: function (data) {
 						$("#result").html(data)
 					},
 
-// código a ejecutar si la petición falla;
-// son pasados como argumentos a la función
-// el objeto de la petición en crudo y código de estatus de la petición
-error : function(xhr, status) {
-    alert('Disculpe, existió un problema');
-}
-				})
+          // código a ejecutar si la petición falla;
+          // son pasados como argumentos a la función
+          // el objeto de la petición en crudo y código de estatus de la petición
+          error : function(xhr, status) {
+              alert('Disculpe, existió un problema');
+          }
+        })
 
 			}
 			obtener_datos();
 
 
-            /*2. filtar busqueda por campo ingresado */
-			$(document).on("keyup","#nameproduct", function () {
+      /*2. filtar busqueda por campo ingresado*/
+      $(document).on("keyup","#nameproduct", function () {
 			//obteniendo el valor que se puso en campo identifier
 			var valor = $(this).val();
+      var category_id = document.getElementById("category_id").value;
+      var provider_id = document.getElementById("provider_id").value;
         	//condición de campo no vacio
         	if (valor!= "") {
-                obtener_datos(valor); //busqueda en base al valor
+                obtener_datos(valor,category_id,provider_id); //busqueda en base al valor
         	} else {
 				obtener_datos(); //desplegar todo
 			}
 
 			})
+			
 
 		});
 
