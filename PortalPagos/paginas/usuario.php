@@ -63,7 +63,7 @@
 
           <v-app-bar-nav-icon>
             <v-btn @click="cargarPantallaIngresoDinero()">
-              TRANSACCIONES 
+              TRANSACCIONES
             </v-btn>
 
 
@@ -71,7 +71,7 @@
           </v-app-bar-nav-icon>
           <v-spacer></v-spacer>
 
-          
+
 
 
           <v-toolbar-title> {{usuario}} </v-toolbar-title>
@@ -149,6 +149,87 @@
 
         </div>
 
+
+        <div v-if="mostrar === 3">
+
+
+          <v-img src="../images/sistema/desenfocado3.jpeg">
+            <center>
+              <v-toolbar-title> REPORTE DE INGRESOS Y EGRESOS</v-toolbar-title>
+            </center>
+            <div>
+              <v-toolbar-title> Filtros </v-toolbar-title>
+              <v-row class="fill-height" align="center">
+                <v-col cols="12" sm="4">
+                  <div> Fecha Inicio</div>
+                  <v-date-picker label="Si quieres filtrar por fechas" v-model="filtroInicioFecha" class="mt-4" min="1900-01-01" max="2040-01-01"></v-date-picker>
+                </v-col>
+                <v-col cols="12" sm="4">
+
+                  <div> Fecha Fin</div>
+                  <v-date-picker label="Si quieres filtrar por fechas" v-model="filtroFinFecha" class="mt-4" min="1900-01-01" max="2040-01-01"></v-date-picker><br><br>
+                </v-col>
+              </v-row>
+
+              <v-btn color="success" class="mr-4" @click="filtrarTransacciones()" name="btn5" required> OBTENER TRANSACCIONES
+              </v-btn>
+              <v-btn color="success" class="mr-4" @click="reiniciarFechas()" name="btn6" required> Reiniciar Fechas
+              </v-btn>
+            </div>
+
+            <center>
+
+            <v-toolbar-title> Subtotal Transacciones Financieras Q{{cierreFinanciero}} </v-toolbar-title>
+            <v-toolbar-title> Subtotal Transacciones Internas Q{{cierreInterno}} </v-toolbar-title>
+            <v-toolbar-title> Total Final Q{{cierreTotal}} </v-toolbar-title>
+            <v-toolbar-title> Impuestos cobrados Q{{impuestos}} </v-toolbar-title>
+
+              <v-container class="pa-4 text-center" fill-height fluid align="center">
+                <v-row class="fill-height" align="center">
+                  <v-col cols="12" sm="4">
+                    <v-card>
+                      <v-card-title>
+                        <center>TRANSACCIONES FINANCIERAS</center><br><br>
+                      </v-card-title>
+                      <v-card-subtitle class="pb-0">
+                        <v-text-field v-model="filtroTransaccionesFinancieras" append-icon="mdi-magnify" label="Escribe lo que desees buscar para cualquier campo" single-line hide-details></v-text-field>
+                      </v-card-subtitle>
+                      <br>
+
+
+                      <v-data-table :headers="headerTransaccionesFinancieras" :items="datosTransaccionesFinancieras" :search="filtroTransaccionesFinancieras"></v-data-table>
+                    </v-card>
+                  </v-col>
+
+                  <v-divider vertical></v-divider>
+                  <v-col cols="12" sm="4">
+                    <v-card>
+                      <v-card-title>
+                        <center>TRANSACCIONES INTERNAS</center><br><br>
+                      </v-card-title>
+                      <v-card-subtitle class="pb-0">
+                        <v-text-field v-model="filtroTransaccionesInternas" append-icon="mdi-magnify" label="Escribe lo que desees buscar para cualquier campo" single-line hide-details></v-text-field>
+                      </v-card-subtitle>
+                      <br>
+                      <v-data-table :headers="headerTransaccionesInternas" :items="datosTransaccionesInternas" :search="filtroTransaccionesInternas"></v-data-table>
+                    </v-card>
+                  </v-col>
+
+
+
+                </v-row>
+              </v-container>
+
+            </center>
+
+
+
+
+
+
+
+        </div>
+
         <div v-else-if="mostrar === 4">
 
 
@@ -178,18 +259,18 @@
                       <v-responsive :aspect-ratio="16/9">
                         <v-img src="../images/sistema/fondo.jpg">
                           <v-form ref="form" v-model="valid" lazy-validation>
-                          <div> MENU PARA LAS TRANSACCIONES DE DINERO</div>  <br>
-                          <v-text-field v-model="montoIngresoDinero"  :rules="[
+                            <div> MENU PARA LAS TRANSACCIONES DE DINERO</div> <br>
+                            <v-text-field v-model="montoIngresoDinero" :rules="[
               () => !!montoIngresoDinero || 'El campo es requerido',
                 ]" type="number" label="Ingresa el monto de dinero" required></v-text-field>
 
                             <div> SELECCIONA TU METODO DE PAGO</div>
                             <v-radio-group v-model="radioGroupMetodo">
                               <div v-if="cuentaFinanciera != null">
-                              <v-radio :label="`Cuenta Financiera: ${cuentaFinanciera}`" :value="1" selected ></v-radio>
+                                <v-radio :label="`Cuenta Financiera: ${cuentaFinanciera}`" :value="1" selected></v-radio>
                               </div>
                               <div v-if="tarjetaCredito != null">
-                              <v-radio :label="`Tarjeta de Credito: ${tarjetaCredito}`" :value="2"></v-radio>
+                                <v-radio :label="`Tarjeta de Credito: ${tarjetaCredito}`" :value="2"></v-radio>
                               </div>
                             </v-radio-group>
 
@@ -226,7 +307,7 @@
 
 
         </div>
-        
+
 
 
         <div v-else>
