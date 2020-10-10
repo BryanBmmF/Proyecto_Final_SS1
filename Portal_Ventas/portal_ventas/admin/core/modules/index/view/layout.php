@@ -60,8 +60,8 @@ if(isset($_SESSION["admin_id"]) && $_SESSION["admin_id"]!=""):
             -->
             <ul class="dropdown-menu"> 
               <li><a href="index.php?view=sellreport"><i class="fa fa-cart-arrow-down"></i> Ventas generales</a></li>
-              <li><a href="index.php?view=sellreport-category"><i class="fa fa-table"></i> Ventas por categoria</a></li>
-              <li><a href="index.php?view=sellreport-provider"><i class="fa fa-truck"></i> Ventas por proveedor</a></li>
+              <li><a href="index.php?view=sellreport-category"><i class="fa fa-table"></i> Ventas por Producto</a></li>
+              
             </ul>
           </li>
           <li><a href="index.php?view=clients"><i class="fa fa-male"></i> Clientes</a></li>
