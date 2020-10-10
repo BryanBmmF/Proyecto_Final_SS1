@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
 
@@ -8,286 +9,137 @@
   <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
-<body >
+
+<body>
 
   <div id="login">
     <v-app>
-    <img  src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvPys2xUiHACHC4HbUkeho-5SjSJFPANt8uA&usqp=CAU">
-    <br>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvPys2xUiHACHC4HbUkeho-5SjSJFPANt8uA&usqp=CAU">
+      <br>
       <template>
         <div v-if="mostrarLogin">
-          <center><v-toolbar-title center>{{tituloLogin}}</v-toolbar-title></center>
-    <v-form
-      ref="form"
-      v-model="valid"
-      lazy-validation
+          <center>
+            <v-toolbar-title center>{{tituloLogin}}</v-toolbar-title>
+          </center>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-text-field v-model="usuarioLogin" :counter="300" :rules="usuarioRules" label="Usuario" required></v-text-field>
 
-    >
-      <v-text-field
-        v-model="usuarioLogin"
-        :counter="300"
-        :rules="usuarioRules"
-        label="Usuario"
-        required
-      ></v-text-field>
+            <v-text-field v-model="contrasenaLogin" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" :rules="contrasenaRules" label="Contrasena" @click:append="show1 = !show1" required></v-text-field>
 
-      <v-text-field
-        v-model="contrasenaLogin"
-        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-        :type="show1 ? 'text' : 'password'"
-        :rules="contrasenaRules"
-        label="Contrasena"
-        @click:append="show1 = !show1"
-        required
-      ></v-text-field>
+            <v-btn :disabled="!valid" color="success" class="mr-4" @click="iniciarSesion">
+              Ingresar
+            </v-btn>
 
-      <v-btn
-        :disabled="!valid"
-        color="success"
-        class="mr-4"
-        @click="iniciarSesion"
-      >
-        Ingresar
-      </v-btn>
-
-      <v-btn
-        color="error"
-        class="mr-4"
-        @click="reset"
-      >
-        Borrar Datos
-      </v-btn>
+            <v-btn color="error" class="mr-4" @click="reset">
+              Borrar Datos
+            </v-btn>
 
 
-    </v-form>
-    <br><br>
-    <v-btn
-      color="blue"
-      class="mr-4"
-      @click="cambiarBanderaLogin"
-    >
-      Crear Usuario
-    </v-btn>
-    </div>
-    <div v-else>
-      <v-form
-        ref="form2"
-        v-model="valid2"
-        lazy-validation
-        method="post"
-        action="crearUsuario.php"
-      ><br>
-      <v-btn
-        color="blue"
-        class="mr-4"
-        @click="cambiarBanderaLogin"
-      >
-        Volver al Login
-      </v-btn>
+          </v-form>
+          <br><br>
+          <v-btn color="blue" class="mr-4" @click="cambiarBanderaLogin">
+            Crear Usuario
+          </v-btn>
+        </div>
+        <div v-else>
+          <v-form ref="form2" v-model="valid2" lazy-validation method="post" action="crearUsuario.php"><br>
+            <v-btn color="blue" class="mr-4" @click="cambiarBanderaLogin">
+              Volver al Login
+            </v-btn>
 
 
 
-      <center><v-toolbar-title center>{{tituloLogin}}</v-toolbar-title></center>
+            <center>
+              <v-toolbar-title center>{{tituloLogin}}</v-toolbar-title>
+            </center>
 
-      <v-text-field
-        v-model="usuarioForm"
-        :counter="20"
-        :rules="usuarioFormRules"
-        label="Usuario"
-        hint="Maximo 20 caracteres"
-        counter
-        required
-      ></v-text-field>
+            <v-text-field v-model="usuarioForm" :counter="20" :rules="usuarioFormRules" label="Usuario" hint="Maximo 20 caracteres" counter required></v-text-field>
 
-      <v-text-field
-        v-model="contrasenaForm"
-        :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-        :type="show2 ? 'text' : 'password'"
-        :rules="contrasenaFormRules"
-        label="Contrasena"
-        @click:append="show2 = !show2"
-        required
-      ></v-text-field>
+            <v-text-field v-model="contrasenaForm" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" :type="show2 ? 'text' : 'password'" :rules="contrasenaFormRules" label="Contrasena" @click:append="show2 = !show2" required></v-text-field>
 
-      <v-text-field
-        v-model="contrasenaRepetidaForm"
-        :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
-        :type="show3 ? 'text' : 'password'"
-        :rules="contrasenaRepetidaFormRules"
-        label="Contrasena Repetida"
-        @click:append="show3 = !show3"
-        required
-      ></v-text-field>
+            <v-text-field v-model="contrasenaRepetidaForm" :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'" :type="show3 ? 'text' : 'password'" :rules="contrasenaRepetidaFormRules" label="Contrasena Repetida" @click:append="show3 = !show3" required></v-text-field>
 
-      <v-text-field
-        v-model="nombreForm"
-        :counter="75"
-        :rules="nombreFormRules"
-        label="Nombre Completo"
-        hint="Maximo 75 caracteres"
-        counter
-        required
-      ></v-text-field>
+            <v-text-field v-model="nombreForm" :counter="75" :rules="nombreFormRules" label="Nombre Completo" hint="Maximo 75 caracteres" counter required></v-text-field>
 
-      <v-text-field
-        v-model="nombreEmpresaForm"
-        :counter="50"
-        :rules="nombreEmpresaFormRules"
-        label="Nombre Empresa"
-        hint="Maximo 50 caracteres"
-        counter
-        required
-      ></v-text-field>
+            <v-text-field v-model="nombreEmpresaForm" :counter="50" :rules="nombreEmpresaFormRules" label="Nombre Empresa" hint="Maximo 50 caracteres" counter required></v-text-field>
 
-      <center><v-toolbar-title center>PARA CREAR UNA CUENTA EN EL PORTAL DE PAGOS DEBES DE INICIAR SESION EN UNA CUENTA DEL PORTAL FINANCIERO</v-toolbar-title></center>
-      <br>
-      <v-btn
-        color="yellow"
-        class="mr-4"
-        @click="mostrarMetodoFinanciero = 1"
-      >
-        Usar Cuenta Bancaria
-      </v-btn>
+            <center>
+              <v-toolbar-title center>PARA CREAR UNA CUENTA EN EL PORTAL DE PAGOS DEBES DE INICIAR SESION EN UNA CUENTA DEL PORTAL FINANCIERO</v-toolbar-title>
+            </center>
+            <br>
+            <v-btn color="yellow" class="mr-4" @click="mostrarMetodoFinanciero = 1">
+              Usar Cuenta Bancaria
+            </v-btn>
 
-      <v-btn
-        color="red"
-        class="mr-4"
-        @click="mostrarMetodoFinanciero = 2"
-      >
-        Usar Tarjeta de Credito
-      </v-btn>
+            <v-btn color="red" class="mr-4" @click="mostrarMetodoFinanciero = 2">
+              Usar Tarjeta de Credito
+            </v-btn>
 
-      <div v-if="mostrarMetodoFinanciero === 1">
+            <div v-if="mostrarMetodoFinanciero === 1">
 
-        <div>
-          INICIA SESION CON TU CUENTA EN EL PORTAL FINANCIERO
-        </div><br>
-        <v-text-field
-        v-model="usuarioFinancieroCuentaForm"
-        :counter="8"
-        :rules="usuarioFinancieroCuentaFormRules"
-        label="Usuario en el portal financiero"
-        hint="Maximo 8 caracteres"
-        counter
-        required
-      ></v-text-field>
+              <div>
+                INICIA SESION CON TU CUENTA EN EL PORTAL FINANCIERO
+              </div><br>
+              <v-text-field v-model="usuarioFinancieroCuentaForm" :counter="8" :rules="usuarioFinancieroCuentaFormRules" label="Usuario en el portal financiero" hint="Maximo 8 caracteres" counter required></v-text-field>
 
 
-        <v-text-field
-        v-model="contrasenaUsuarioFinancieroCuentaForm"
-        :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-        :type="show2 ? 'text' : 'password'"
-        :rules="contrasenaFormRules"
-        label="Contrasena de cuenta en el portal financiero"
-        @click:append="show2 = !show2"
-        required
-      ></v-text-field>
+              <v-text-field v-model="contrasenaUsuarioFinancieroCuentaForm" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" :type="show2 ? 'text' : 'password'" :rules="contrasenaFormRules" label="Contrasena de cuenta en el portal financiero" @click:append="show2 = !show2" required></v-text-field>
 
-      <v-text-field
-        v-model="noCuentaUsuarioFinancieroCuentaForm"
-        :counter="10"
-        :rules="noCuentaUsuarioFinancieroCuentaFormRules"
-        label="Numero de Cuenta en el portal financiero"
-        hint="Maximo 10 caracteres"
-        counter
-        required
-      ></v-text-field>
+              <v-text-field v-model="noCuentaUsuarioFinancieroCuentaForm" :counter="10" :rules="noCuentaUsuarioFinancieroCuentaFormRules" label="Numero de Cuenta en el portal financiero" hint="Maximo 10 caracteres" counter required></v-text-field>
 
 
-      </div>
-      <div v-else-if="mostrarMetodoFinanciero === 2">
-        <div>
-          UTILIZA TU TARJETA DE CREDITO DEL PORTAL FINANCIERO
-        </div><br>
+            </div>
+            <div v-else-if="mostrarMetodoFinanciero === 2">
+              <div>
+                UTILIZA TU TARJETA DE CREDITO DEL PORTAL FINANCIERO
+              </div><br>
 
-        <v-text-field
-        v-model="numeroTarjetaForm"
-        :counter="16"
-        :rules="numeroTarjetaFormRules"
-        label="Numero de tarjeta"
-        hint="Maximo 16 caracteres"
-        type="number"
-        counter
-        required
-      ></v-text-field>
+              <v-text-field v-model="numeroTarjetaForm" :counter="16" :rules="numeroTarjetaFormRules" label="Numero de tarjeta" hint="Maximo 16 caracteres" type="number" counter required></v-text-field>
 
 
-      <v-text-field
-      v-model="dpiTarjetaForm"
-      :counter="13"
-      :rules="dpiTarjetaFormRules"
-      label="Dpi CuentaHabiente"
-      hint="Maximo 13 caracteres"
-      type="number"
-      counter
-      required
-    ></v-text-field>
+              <v-text-field v-model="dpiTarjetaForm" :counter="13" :rules="dpiTarjetaFormRules" label="Dpi CuentaHabiente" hint="Maximo 13 caracteres" type="number" counter required></v-text-field>
 
-    <v-text-field
-      v-model="codigoCVCTarjetaForm"
-      :counter="3"
-      :rules="codigoCVCTarjetaFormRules"
-      label="Codigo CVC"
-      hint="Maximo 3 caracteres"
-      type="number"
-      counter
-      required
-    ></v-text-field>
+              <v-text-field v-model="codigoCVCTarjetaForm" :counter="3" :rules="codigoCVCTarjetaFormRules" label="Codigo CVC" hint="Maximo 3 caracteres" type="number" counter required></v-text-field>
 
-    <div> Fecha Vencimiento</div>
-               <v-date-picker
-                   label="Fecha de Vencimiento por favor"
-                   v-model="fechaVencimientoTarjetaForm"
-                   class="mt-4"
-                   min="1900-01-01"
-                   max="2040-01-01"
-                 ></v-date-picker>
+              <div> Fecha Vencimiento</div>
+              <v-date-picker label="Fecha de Vencimiento por favor" v-model="fechaVencimientoTarjetaForm" class="mt-4" min="1900-01-01" max="2040-01-01"></v-date-picker>
 
-   </div>
+            </div>
 
-      <v-btn
-        color="green"
-        class="mr-4"
-        @click="validarMetodoPago"
-      >
-        VALIDAR METODO DE PAGO
-      </v-btn>
-      <div> <br>
-        {{mensajeValidacionMetodo}} <br>
-        METODO DE PAGO: {{tipoMetodoPagoValidado}} <br>
-        NUMERO: {{numeroMetodoPagoValidado}} <br>
-      </div>
-
-
-      
-
-
-<br><br>
-      <v-btn
-        :disabled="!valid2"
-        color="success"
-        class="mr-4"
-        @click="registrarUsuario"
-        name="btn2"
-      >
-        Registrarse
-      </v-btn>
-    </v-form>
-
-      </div>
+            <v-btn color="green" class="mr-4" @click="validarMetodoPago">
+              VALIDAR METODO DE PAGO
+            </v-btn>
+            <div> <br>
+              {{mensajeValidacionMetodo}} <br>
+              METODO DE PAGO: {{tipoMetodoPagoValidado}} <br>
+              NUMERO: {{numeroMetodoPagoValidado}} <br>
+            </div>
 
 
 
 
 
-  </template>
-</img>
+            <br><br>
+            <v-btn :disabled="!valid2" color="success" class="mr-4" @click="registrarUsuario" name="btn2">
+              Registrarse
+            </v-btn>
+          </v-form>
+
+        </div>
+
+
+
+
+
+      </template>
+      </img>
     </v-app>
   </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
   <script src="../js/login.js"> </script>
 </body>
+
 </html>

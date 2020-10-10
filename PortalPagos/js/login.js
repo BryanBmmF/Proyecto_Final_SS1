@@ -99,7 +99,7 @@ new Vue({
           if (response.data.estado === 'ACTIVO') {
             if (response.data.tipo == 'EMPRESA') {
               window.location.href = '../paginas/usuario.php?user=' + response.data.correo + '&key=' + response.data.key
-            } else if (response.data.tipo == 'ADMINISTRADOR') {
+            } else if (response.data.tipo == 'ADMINISTRACION') {
               window.location.href = './administrador.php?user=' + response.data.correo+ '&key=' + response.data.key
             } else {
               window.location.href = '../paginas/login.html'

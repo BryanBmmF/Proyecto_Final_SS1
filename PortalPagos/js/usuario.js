@@ -73,7 +73,56 @@ new Vue({
     montoRetiroDinero: 300,
 
     tasaInteres: 0.013,
-    
+
+    //tabla datos
+    filtroInicioFecha: '',
+    filtroFinFecha: '',
+    filtroTransaccionesFinancieras: '',
+    filtroTransaccionesInternas: '',
+    cierreFinanciero:0,
+    cierreInterno:0,
+    cierreTotal:0,
+    impuestos:0,
+
+    headerTransaccionesInternas: [
+      {
+        text: 'ID',
+        align: 'start',
+        filterable: true,
+        value: 'id',
+      },
+      { text: 'Monto', value: 'monto_total' },
+      { text: 'Cuenta Emisora', value: 'cuenta_emisora' },
+      { text: 'Cuenta Receptora', value: 'cuenta_receptora' },
+      { text: 'Descripcion', value: 'descripcion' },
+      { text: 'Fecha', value: 'fecha_transaccion' },
+    ],
+
+
+    headerTransaccionesFinancieras: [
+      {
+        text: 'ID',
+        align: 'start',
+        filterable: false,
+        value: 'id',
+      },
+      { text: 'Cuenta', value: 'cuenta_involucrada' },
+      { text: 'Monto', value: 'monto' },
+      { text: 'Impuestos', value: 'impuestos' },
+      { text: 'Total', value: 'total' },
+      { text: 'Tipo', value: 'tipo' },
+      { text: 'Fecha', value: 'fecha_transaccion' },
+      { text: 'Metodo', value: 'tipo_metodo_pago' },
+      { text: 'Numero Metodo', value: 'numero_metodo_pago' },
+      { text: 'Numero Transaccion Portal Financiero', value: 'numero_transaccion_portal_financiero' },
+    ],
+
+    datosTransaccionesFinancieras: [],
+    datosTransaccionesInternas: [],
+
+
+    //hasta aqui tabla
+
 
 
   },
@@ -303,7 +352,81 @@ new Vue({
         console.log(error)
       })
     },
+    reiniciarFechas: function () {
+      this.filtroInicioFecha = ''
+      this.filtroFinFecha = ''
+    },
+    filtrarTransacciones() {
+      this.cierreFinanciero=0
+      this.cierreInterno=0
+      this.impuestos=0
+      this.cierreTotal=0
+      this.obtenerTransaccionesFinancieras()
+      this.obtenerTransaccionesInternas()
+      this.cierreTotal= parseFloat(this.cierreFinanciero) + parseFloat(this.cierreInterno)
+
+    },
+
+    obtenerTransaccionesInternas() {
+      let formData = new FormData()
+      formData.append('usuario', this.usuario)
+      formData.append('fechaInicio', this.filtroInicioFecha)
+      formData.append('fechaFin', this.filtroFinFecha)
+      formData.append('tipo', 'PERSONAL')
+      axios.post('../php/obtenerTransaccionesInternas.php', formData)
+        .then((response) => {
+          if (response.data.result) {
+            this.datosTransaccionesInternas = response.data.datos
+            for (var i = 0; i < response.data.datos.length; i+=1) {
+
+              if(response.data.datos[i].cuenta_receptora == this.usuario){
+                this.cierreInterno = parseFloat(this.cierreInterno) + parseFloat(response.data.datos[i].monto_total)
+              }else{
+                this.cierreInterno = parseFloat(this.cierreInterno) - parseFloat(response.data.datos[i].monto_total)
+                
+              }
+            }
+          } else {
+            alert(response.data.mensaje)
+          }
+
+        })
+        .catch((error) => {
+          alert(error)
+        })
+    },
+    obtenerTransaccionesFinancieras() {
+      let formData = new FormData()
+      formData.append('usuario', this.usuario)
+      formData.append('fechaInicio', this.filtroInicioFecha)
+      formData.append('fechaFin', this.filtroFinFecha)
+      formData.append('tipo', 'PERSONAL')
+      axios.post('../php/obtenerTransaccionesFinancieras.php', formData)
+        .then((response) => {
+          if (response.data.result) {
+            this.datosTransaccionesFinancieras = response.data.datos
+            for (var i = 0; i < response.data.datos.length; i+=1) {
+              if(response.data.datos[i].tipo == 'ACREDITACION'){
+                this.cierreFinanciero = parseFloat(this.cierreFinanciero) + parseFloat(response.data.datos[i].total)
+              }else{
+                this.cierreFinanciero = parseFloat(this.cierreFinanciero) - parseFloat(response.data.datos[i].total)
+                this.impuestos = parseFloat(this.impuestos) + parseFloat(response.data.datos[i].impuestos)
+              }
+             
+            }
+          } else {
+            alert(response.data.mensaje)
+          }
+
+        })
+        .catch((error) => {
+          alert(error)
+        })
+    },
+
   },
 
   vuetify: new Vuetify(),
 })
+// INSERT INTO TRANSACCION_INTERNA VALUES(null,300,'juan.1@JPMAZATE.com','juanito.1@JPMAZATE.com','Pago tienda',now());
+//INSERT INTO TRANSACCION_INTERNA VALUES(null,300,'juanito.1@JPMAZATE.com','juan.1@JPMAZATE.com','Pago tienda',now());
