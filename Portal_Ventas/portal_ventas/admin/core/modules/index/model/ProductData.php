@@ -2,7 +2,6 @@
 class ProductData {
 	public static $tablename = "product";
 
-
 	public function ProductData(){
 		$this->title = "";
 		$this->content = "";
@@ -52,7 +51,8 @@ class ProductData {
 
 
 	public static function getAll(){
-		$sql = "select * from ".self::$tablename." order by created_at desc";
+		$user_id= $_SESSION['admin_id'];
+		$sql = "select * from ".self::$tablename." where user_id = $user_id order by created_at desc";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new ProductData());
 	}
