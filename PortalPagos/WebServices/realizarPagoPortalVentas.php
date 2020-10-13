@@ -35,17 +35,17 @@ if ($result) {
             if ($datos['saldo'] >= $total) {
                 $banderaUsuarioEmisor = true;
             } else {
-                $mandar['mensaje'] = 'SALDO INSUFICIENTE EN CORREO: ' . $usuarioEmisor . ' POR FAVOR RECARGA FONDOS ANTES DE REALIZAR EL PAGO';
+                $mandar['mensaje'] = 'SALDO INSUFICIENTE EN CORREO EMISOR: ' . $usuarioEmisor . ' POR FAVOR RECARGA FONDOS ANTES DE REALIZAR EL PAGO';
                 $mandar['result'] = false;
                 echo json_encode($mandar);
             }
         } else {
-            $mandar['mensaje'] = 'ESTADO DEL CORREO: ' . $usuarioEmisor . ' NO VALIDO. SU ESTADO ACTUAL ES:' . $datos['estado'];
+            $mandar['mensaje'] = 'ESTADO DEL CORREO EMISOR: ' . $usuarioEmisor . ' NO VALIDO. SU ESTADO ACTUAL ES:' . $datos['estado'];
             $mandar['result'] = false;
             echo json_encode($mandar);
         }
     } else {
-        $mandar['mensaje'] = 'EL CORREO: ' . $usuarioEmisor . ' NO EXISTE' . mysqli_error($bd);
+        $mandar['mensaje'] = 'EL CORREO EMISOR: ' . $usuarioEmisor . ' NO EXISTE' . mysqli_error($bd);
         $mandar['result'] = false;
         echo json_encode($mandar);
     }
@@ -65,12 +65,12 @@ if ($result) {
         if ($datos['estado'] === $ESTADO_ACTIVO) {
             $banderaUsuarioReceptor = true;
         } else {
-            $mandar['mensaje'] = 'ESTADO DEL CORREO: ' . $usuarioReceptor . ' NO VALIDO. SU ESTADO ACTUAL ES:' . $datos['estado'];
+            $mandar['mensaje'] = 'ESTADO DEL CORREO RECEPTOR: ' . $usuarioReceptor . ' NO VALIDO. SU ESTADO ACTUAL ES:' . $datos['estado'];
             $mandar['result'] = false;
             echo json_encode($mandar);
         }
     } else {
-        $mandar['mensaje'] = 'EL CORREO: ' . $usuarioReceptor . ' NO EXISTE' . mysqli_error($bd);
+        $mandar['mensaje'] = 'EL CORREO RECEPTOR: ' . $usuarioReceptor . ' NO EXISTE' . mysqli_error($bd);
         $mandar['result'] = false;
         echo json_encode($mandar);
     }
@@ -83,10 +83,10 @@ if ($result) {
 
 if ($banderaUsuarioEmisor && $banderaUsuarioReceptor) {
     $bd->autocommit(FALSE);
-    $sql = "UPDATE FROM CUENTA SET SALDO=SALDO-$total WHERE correo='$usuarioEmisor' ;";
+    $sql = "UPDATE CUENTA SET SALDO=SALDO-$total WHERE correo='$usuarioEmisor' ;";
     $result = mysqli_query($bd, $sql);
     if ($result) {
-        $sql = "UPDATE FROM CUENTA SET SALDO=SALDO+$total WHERE correo='$usuarioReceptor' ;";
+        $sql = "UPDATE CUENTA SET SALDO=SALDO+$total WHERE correo='$usuarioReceptor' ;";
         $result = mysqli_query($bd, $sql);
         if ($result) {
             $sql = "INSERT INTO TRANSACCION_INTERNA VALUES(null,$total,'$usuarioEmisor','$usuarioReceptor','$descripcion',now());";
@@ -98,25 +98,25 @@ if ($banderaUsuarioEmisor && $banderaUsuarioReceptor) {
                     $mandar['result'] = false;
                     echo json_encode($mandar);
                 } else {
-                    $mysqli->rollback();
+                    $bd->rollback();
                     $mandar['mensaje'] = 'TRANSACCION REALIZADA CON EXITO, ID DE LA TRANSACCION INTERNA: ' . $codigoTransaccionInterna;
                     $mandar['result'] = true;
                     echo json_encode($mandar);
                 }
             } else {
-                $mysqli->rollback();
+                $bd->rollback();
                 $mandar['mensaje'] = 'NO SE PUDO REGISTRAR LA TRANSACCION INTERNA, PERO SI SE REALIZO EL MOVIMIENTO DEL DINERO';
                 $mandar['result'] = false;
                 echo json_encode($mandar);
             }
         } else {
-            $mysqli->rollback();
+            $bd->rollback();
             $mandar['mensaje'] = 'NO SE PUDO ACTUALIZAR EL SALDO EN LA CUENTA DEL VENDEDOR: ' . $usuarioEmisor;
             $mandar['result'] = false;
             echo json_encode($mandar);
         }
     } else {
-        $mysqli->rollback();
+        $bd->rollback();
         $mandar['mensaje'] = 'NO SE PUDO ACTUALIZAR EL SALDO EN LA CUENTA DEL COMPRADOR: ' . $usuarioEmisor;
         $mandar['result'] = false;
         echo json_encode($mandar);
