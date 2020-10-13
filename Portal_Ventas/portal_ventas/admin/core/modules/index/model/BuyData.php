@@ -75,7 +75,10 @@ class BuyData {
 
 
 	public static function getAll(){
-		$sql = "select * from ".self::$tablename." order by created_at desc";
+		//SELECT a.id, a.k, a.code, a.client_id, a.coupon_id, a.status_id, a.created_at, a.paymethod_id FROM buy a inner join buy_product b on a.id = b.buy_id inner join product c on b.product_id = c.id where c.user_id =1;
+		$user_id= $_SESSION['admin_id'];
+		$sql = "select a.id, a.k, a.code, a.client_id, a.coupon_id, a.status_id, a.created_at, a.paymethod_id FROM ".self::$tablename." a inner join buy_product b on a.id = b.buy_id inner join product c on b.product_id = c.id where c.user_id =$user_id order by created_at desc";
+		//$sql = "select * from ".self::$tablename." order by created_at desc";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new BuyData());
 	}
@@ -107,6 +110,7 @@ class BuyData {
 	public static function getAllByClientId($id){
 		$sql = "select * from ".self::$tablename." where client_id=$id order by created_at desc";
 		$query = Executor::doit($sql);
+		//print "<script>alert('SQL:$sql');</script>";
 		return Model::many($query[0],new BuyData());
 	}
 
@@ -115,6 +119,21 @@ class BuyData {
 		$sql = "select * from ".self::$tablename." where is_public=1";
 		$query = Executor::doit($sql);
 		return Model::many($query[0],new BuyData());
+	}
+
+	//Busqueda de productos mas vendidos
+	public static function getProductosMasVendidos(){
+		$rawdata = array(); //creamos un array
+		$con = Database::getCon();
+		$sql = "select * from ".self::$tablename." where client_id=2 order by created_at desc";
+		$result =$con->query($sql);
+		while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+			$rawdata[] = $row;
+			print($row['code']);
+		}
+		$jas=json_encode($rawdata);
+		//print "<script>alert('SQL:$rawdata[0]');</script>";
+		return $jas;
 	}
 
 }

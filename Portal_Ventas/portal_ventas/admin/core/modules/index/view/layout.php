@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>.: Admin Katana Lite v2 :.</title>
+    <title>J3B Shop - Admin</title>
 
     <!-- Bootstrap core CSS -->
     <link href="res/bootstrap3/css/bootstrap.css" rel="stylesheet">
@@ -37,7 +37,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="./">KATANA LITE <sup><small><span class="label label-primary">v2</span></small></sup> </a>
+          <a class="navbar-brand" href="./">J3B Shop <sup><small><span class="label label-primary">v1</span></small></sup> </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -60,8 +60,10 @@ if(isset($_SESSION["admin_id"]) && $_SESSION["admin_id"]!=""):
             -->
             <ul class="dropdown-menu"> 
               <li><a href="index.php?view=sellreport"><i class="fa fa-cart-arrow-down"></i> Ventas generales</a></li>
+              <li><a href="index.php?view=sellreport-category"><i class="fa fa-table"></i> Ventas por categoria</a></li>
+              <li><a href="index.php?view=sellreport-provider"><i class="fa fa-truck"></i> Ventas por proveedor</a></li>
               <li><a href="index.php?view=sellreport-category"><i class="fa fa-table"></i> Ventas por Producto</a></li>
-              
+              <li><a href="index.php?view=mostselled-products"><i class="fa fa-table"></i> Productos mas vendidos</a></li>
             </ul>
           </li>
           <li><a href="index.php?view=clients"><i class="fa fa-male"></i> Clientes</a></li>

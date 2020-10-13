@@ -50,7 +50,7 @@ $paymethods = PaymethodData::getAll();
                       <?php
  if(count($settings)>0):?>
 <?php foreach($settings as $cat):?>
-  <?php 
+  <?php
   if(substr($cat->name, 0,5)=="bank_"):?>
                         <tr>
                         <td><?php echo $cat->label; ?>

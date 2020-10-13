@@ -8,7 +8,7 @@ if(count($_POST)>0){
 	$user->username = $_POST["username"];
 	$user->email = $_POST["email"];
 	$user->password = sha1(md5($_POST["password"]));
-	$user->is_admin="1";
+	$user->is_admin="0";
 	$usuarioPortalDePagos=$_POST["userportalpagos"];
 	$contrasenaPortalDePagos = sha1(md5($_POST["passwordportaldepagos"]));
 	#la url varia dependiendo el servidor donde se encuentre alojado
