@@ -80,7 +80,7 @@
          </v-toolbar>
 
          <div v-if="mostrarInicio === 3 ">
-           <v-img src="../images/sistema/desenfocado3.jpeg">
+           <v-img src="../images/sistema/desenfocado.jpeg">
              <center>
                <v-toolbar-title> REPORTE DE INGRESOS Y EGRESOS</v-toolbar-title>
              </center>
@@ -111,8 +111,7 @@
                <v-toolbar-title> GANANCIAS OBTENIDAS(IMPUESTOS): Q{{impuestos}} </v-toolbar-title>
 
                <v-container class="pa-4 text-center" fill-height fluid align="center">
-                 <v-row class="fill-height" align="center">
-                   <v-col cols="12" sm="4">
+                 
                      <v-card>
                        <v-card-title>
                          <center>TRANSACCIONES FINANCIERAS</center><br><br>
@@ -125,10 +124,10 @@
 
                        <v-data-table :headers="headerTransaccionesFinancieras" :items="datosTransaccionesFinancieras" :search="filtroTransaccionesFinancieras"></v-data-table>
                      </v-card>
-                   </v-col>
+                     </v-container>
+                     <v-container class="pa-4 text-center" fill-height fluid align="center">
 
                    <v-divider vertical></v-divider>
-                   <v-col cols="12" sm="4">
                      <v-card>
                        <v-card-title>
                          <center>TRANSACCIONES INTERNAS</center><br><br>
@@ -139,11 +138,7 @@
                        <br>
                        <v-data-table :headers="headerTransaccionesInternas" :items="datosTransaccionesInternas" :search="filtroTransaccionesInternas"></v-data-table>
                      </v-card>
-                   </v-col>
 
-
-
-                 </v-row>
                </v-container>
 
              </center>
@@ -151,7 +146,11 @@
          </div>
 
          <div v-else-if="mostrarInicio === 6">
-           VER USUARIOS<br>
+         <v-img src="../images/sistema/desenfocado.jpeg">
+
+          <center>
+         <h1><v-toolbar-title> VER USUARIOS<br> </v-toolbar-title></h1>
+        </center>
            <v-btn color="blue" class="mr-4" @click="mostrarFiltrosUsuario = !mostrarFiltrosUsuario" name="btn6" required> Mostrar Filtros
            </v-btn><br>
 
@@ -223,11 +222,19 @@
 
 
            </div>
+         </v-img>
 
          </div>
 
 
          <div v-else-if="mostrarInicio === 7">
+
+         <v-img src="../images/sistema/desenfocado.jpeg">
+
+         <center>
+          <h1>CREAR USUARIO ADMINISTRADOR</h1>
+            <v-divider horizontal></v-divider>
+          </center>
            <v-form ref="form2" v-model="valid9" lazy-validation method="post" action="crearUsuario.php"><br>
 
 
@@ -251,10 +258,13 @@
                Registrarse
              </v-btn>
            </v-form>
-
+         </v-img>
          </div>
          <div v-else>
+         <v-img src="../images/sistema/desenfocado.jpeg">
+
            SELECCIONA ALGUNA OPCION DEL MENU PARA VISUALIZARLA AQUI
+         </v-img>
          </div>
        </div>
    </div>

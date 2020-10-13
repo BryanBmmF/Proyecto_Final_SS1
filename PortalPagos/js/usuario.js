@@ -390,13 +390,19 @@ new Vue({
     filtrarTransacciones() {
       this.cierreFinanciero=0
       this.cierreInterno=0
-      this.impuestos=0
-      this.cierreTotal=0
+      this.impuestos= 0
+      this.cierreTotal= 0
       this.obtenerTransaccionesFinancieras()
       this.obtenerTransaccionesInternas()
-      this.cierreTotal= parseFloat(this.cierreFinanciero) + parseFloat(this.cierreInterno)
+      this.obtenerTotales()
 
     },
+    obtenerTotales() {
+      
+      
+      
+    },
+
 
     obtenerTransaccionesInternas() {
       let formData = new FormData()
@@ -417,6 +423,7 @@ new Vue({
                 
               }
             }
+            this.cierreTotal = parseFloat(this.cierreFinanciero) + parseFloat(this.cierreInterno)
           } else {
             alert(response.data.mensaje)
           }
@@ -445,6 +452,7 @@ new Vue({
               }
              
             }
+            
           } else {
             alert(response.data.mensaje)
           }

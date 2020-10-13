@@ -342,7 +342,7 @@ var vm = new Vue({
       })
 
     }, deshabilitarUsuario(indice) {
-      if(this.usuariosSistema[indice].saldo <=0){
+      if(this.usuariosSistema[indice].saldo <=100){
 
       
       let formData = new FormData()

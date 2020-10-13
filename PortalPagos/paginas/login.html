@@ -14,9 +14,14 @@
 
   <div id="login">
     <v-app>
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvPys2xUiHACHC4HbUkeho-5SjSJFPANt8uA&usqp=CAU">
-      <br>
+      <img src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"  height="150"></img>
+      
       <template>
+        <v-img src="../images/sistema/desenfocado.jpeg">
+          <center>
+          <h1>PORTAL PAGOS</h1>
+            <v-divider horizontal></v-divider>
+          </center>
         <div v-if="mostrarLogin">
           <center>
             <v-toolbar-title center>{{tituloLogin}}</v-toolbar-title>
@@ -127,12 +132,14 @@
 
         </div>
 
+        </v-img>
+
 
 
 
 
       </template>
-      </img>
+      
     </v-app>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>

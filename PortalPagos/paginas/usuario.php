@@ -88,7 +88,7 @@
         <div v-if="mostrar === 2">
 
 
-          <v-img src="../images/sistema/fondo.jpg">
+          <v-img src="../images/sistema/desenfocado.jpeg">
             <center>
               <v-toolbar-title> PORTAL DE PAGOS</v-toolbar-title>
             </center>
@@ -217,7 +217,7 @@
         <div v-if="mostrar === 3">
 
 
-          <v-img src="../images/sistema/desenfocado3.jpeg">
+          <v-img src="../images/sistema/desenfocado.jpeg">
             <center>
               <v-toolbar-title> REPORTE DE INGRESOS Y EGRESOS</v-toolbar-title>
             </center>
@@ -245,10 +245,13 @@
 
               <v-toolbar-title> Subtotal Transacciones Financieras Q{{cierreFinanciero}} </v-toolbar-title>
               <v-toolbar-title> Subtotal Transacciones Internas Q{{cierreInterno}} </v-toolbar-title>
-              <v-toolbar-title> Total Final Q{{cierreTotal}} </v-toolbar-title>
+              <v-toolbar-title> Total Final Q {{cierreTotal}} </v-toolbar-title>
+              
               <v-toolbar-title> Impuestos cobrados Q{{impuestos}} </v-toolbar-title>
+              
+              
 
-              <v-container class="pa-4 text-center" fill-height fluid align="center">
+              <!--  <v-container class="pa-4 text-center" fill-height fluid align="center">
                 <v-row class="fill-height" align="center">
                   <v-col cols="12" sm="4">
                     <v-card>
@@ -282,7 +285,47 @@
 
 
                 </v-row>
+              </v-container> -->
+              
+
+              
+              <v-container class="pa-4 text-center" fill-height fluid align="center">
+
+
+                <v-card>
+                  <v-card-title>
+                    <center>TRANSACCIONES FINANCIERAS</center><br><br>
+                  </v-card-title>
+                  <v-card-subtitle class="pb-0">
+                    <v-text-field v-model="filtroTransaccionesFinancieras" append-icon="mdi-magnify" label="Escribe lo que desees buscar para cualquier campo" single-line hide-details></v-text-field>
+                  </v-card-subtitle>
+                  <br>
+
+
+                  <v-data-table :headers="headerTransaccionesFinancieras" :items="datosTransaccionesFinancieras" :search="filtroTransaccionesFinancieras"></v-data-table>
+                </v-card>
               </v-container>
+              
+              <v-container class="pa-4 text-center" fill-height fluid align="center">
+                <v-divider vertical></v-divider>
+
+                <v-card>
+                  <v-card-title>
+                    <center>TRANSACCIONES INTERNAS</center><br><br>
+                  </v-card-title>
+                  <v-card-subtitle class="pb-0">
+                    <v-text-field v-model="filtroTransaccionesInternas" append-icon="mdi-magnify" label="Escribe lo que desees buscar para cualquier campo" single-line hide-details></v-text-field>
+                  </v-card-subtitle>
+                  <br>
+                  <v-data-table :headers="headerTransaccionesInternas" :items="datosTransaccionesInternas" :search="filtroTransaccionesInternas"></v-data-table>
+                </v-card>
+
+
+
+
+
+              </v-container>
+              
 
             </center>
 
@@ -375,7 +418,10 @@
 
 
         <div v-else>
-          SELECCIONA ALGUNA OPCION DEL MENU PARA VISUALIZARLO AQUI
+        <v-img src="../images/sistema/desenfocado.jpeg">
+        SELECCIONA ALGUNA OPCION DEL MENU PARA VISUALIZARLO AQUI
+        </v-img>
+          
         </div>
 
 
