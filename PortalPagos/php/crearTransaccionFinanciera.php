@@ -9,14 +9,14 @@ $ACREDITACION = 'ACREDITACION';
 $RETIRO = 'RETIRO';
 
 
-$cuentaInvolucrada = $_POST['cuentaInvolucrada'];
-$monto = $_POST['monto'];
-$impuestos = $_POST['impuestos'];
-$total = $_POST['total'];
-$tipo = $_POST['tipo'];
-$tipoMetodo =$_POST['tipoMetodo'];
-$numeroMetodoPago = $_POST['numeroMetodoPago'];
-$numeroTransaccionPortalFinanciero = $_POST['numeroTransaccionPortalFinanciero'];
+$cuentaInvolucrada = $_POST['cuentaInvolucrada']; // LA CUENTA A LA QUE LE ASIGNARA PISTO
+$monto = $_POST['monto']; // 100 
+$impuestos = $_POST['impuestos']; // 0
+$total = $_POST['total']; // MONTO
+$tipo = $_POST['tipo'];// ACREDITACION
+$tipoMetodo =$_POST['tipoMetodo']; // CUENTA O TARJETA
+$numeroMetodoPago = $_POST['numeroMetodoPago']; // NUMERO DE LA TARJETA O DE LA CUENTA
+$numeroTransaccionPortalFinanciero = $_POST['numeroTransaccionPortalFinanciero']; //
 
 
 

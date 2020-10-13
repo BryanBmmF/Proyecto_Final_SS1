@@ -575,4 +575,18 @@ new Vue({
   vuetify: new Vuetify(),
 })
 // INSERT INTO TRANSACCION_INTERNA VALUES(null,300,'juan.1@JPMAZATE.com','juanito.1@JPMAZATE.com','Pago tienda',now());
+
+
+/**
+ // INSERT INTO TRANSACCION_INTERNA VALUES(null -> ID
+ ,300  -> MONTO
+ 'juan.1@JPMAZATE.com' -> CUENTA EMISORA
+ ,'juanito.1@JPMAZATE.com'  -> CUENTA RECEPTORA
+ ,'Pago tienda' ->DESCRIPCION
+ ,now());  ->FECHA
+
+
+
+ 
+ */
 //INSERT INTO TRANSACCION_INTERNA VALUES(null,300,'juanito.1@JPMAZATE.com','juan.1@JPMAZATE.com','Pago tienda',now());
