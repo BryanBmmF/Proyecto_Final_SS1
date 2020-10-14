@@ -3,8 +3,8 @@
   function conectar(){
 
   $servidor = "127.0.0.1";
-  $usuario = "ad1sysdba";
-  $clave = "Ad1sysdba$";
+  $usuario = "pventasdba";
+  $clave = "Pventasdba$1";
   $base = "db_j3bank";
   $mysql = new mysqli($servidor,$usuario,$clave,$base);
   if($mysql->connect_errno){

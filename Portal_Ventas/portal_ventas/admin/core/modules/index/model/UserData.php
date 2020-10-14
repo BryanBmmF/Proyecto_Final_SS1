@@ -18,12 +18,14 @@ class UserData {
 		$this->email = "";
 		$this->password = "";
 		$this->is_admin="";
+		$this->user_ppagos=""; // en realidad es el correo
+		$this->pass_ppagos="";
 		$this->created_at = "NOW()";
 	}
 
 	public function add(){
-		$sql = "insert into user (name,lastname,username,email,password,is_admin,created_at) ";
-		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",$this->is_admin,$this->created_at)";
+		$sql = "insert into user (name,lastname,username,email,password,is_admin,created_at,username_pp,password_pp) ";
+		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->username\",\"$this->email\",\"$this->password\",$this->is_admin,$this->created_at,\"$this->user_ppagos\",\"$this->pass_ppagos\")";
 //		print "<script>alert('USUARIO REGISTRADO:$sql');</script>";	
 		Executor::doit($sql);
 	}

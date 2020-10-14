@@ -9,12 +9,14 @@ class ClientData {
 		$this->lastname = "";
 		$this->email = "";
 		$this->password = "";
+		$this->user_ppagos = ""; // en realidad es el correo
+		$this->pass_ppagos = "";
 		$this->created_at = "NOW()";
 	}
 
 	public function add(){
-		$sql = "insert into ".self::$tablename." (name,lastname,phone,address,email,password,created_at) ";
-		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->phone\",\"$this->address\",\"$this->email\",\"$this->password\",$this->created_at)";
+		$sql = "insert into ".self::$tablename." (name,lastname,phone,address,email,password,username_pp,password_pp,created_at) ";
+		$sql .= "value (\"$this->name\",\"$this->lastname\",\"$this->phone\",\"$this->address\",\"$this->email\",\"$this->password\",\"$this->user_ppagos\",\"$this->pass_ppagos\",$this->created_at)";
 		Executor::doit($sql);
 	}
 
