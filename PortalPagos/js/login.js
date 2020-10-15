@@ -10,6 +10,7 @@ new Vue({
     checkbox: false,
     mostrarLogin: true,
     mostrarMetodoFinanciero: 1,
+    
 
     tituloLogin: "INICIO DE SESION",
     usuarioLogin: '',
@@ -170,6 +171,7 @@ new Vue({
       this.mostrarLogin = !this.mostrarLogin
     },
     validarMetodoPago() {
+      
 
       if (this.mostrarMetodoFinanciero === 1) {
           
@@ -178,12 +180,18 @@ new Vue({
           formData.append("usuarioFinanciero", this.usuarioFinancieroCuentaForm)
           formData.append("contrasenaUsuarioFinanciero", this.contrasenaUsuarioFinancieroCuentaForm)
           formData.append("noCuenta", this.noCuentaUsuarioFinancieroCuentaForm)
-          
+          /*  let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Credentials': 'true'
+            }
+          } ;  */
           //usar url externa
+          //const proxyurl = "https://cors-anywhere.herokuapp.com/";
           const url = "http://25.89.40.130/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
           axios.post(url, formData).then( (response) => {
             if (response.data.result) {
-              
               alert(response.data.mensaje)
               this.mensajeValidacionMetodo = response.data.mensaje
               this.tipoMetodoPagoValidado = response.data.tipoMetodoPago
@@ -221,6 +229,7 @@ new Vue({
         formData.append("dpi", this.dpiTarjetaForm)
         formData.append("fechaVencimiento", this.fechaVencimientoTarjetaForm)
         formData.append("codigoCVC", this.codigoCVCTarjetaForm)
+        
         //usar url externa
         const url = "http://25.89.40.130/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
         axios.post(url, formData).then( (response) =>{
