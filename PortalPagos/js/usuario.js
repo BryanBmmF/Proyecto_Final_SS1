@@ -229,7 +229,7 @@ new Vue({
         formData.append("monto", this.montoIngresoDinero)
 
 
-        const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/acreditacionPortalPagos.php"
+        const url = "http://25.89.40.130/Proyecto_Final_SS1/Portal_Financiero/WebServices/acreditacionPortalPagos.php"
         axios.post(url, formData).then((response) => {
           if (response.data.result === true) {
             this.crearTransaccionFinanciera(this.usuario, this.montoIngresoDinero, 'ACREDITACION', 'CUENTA', this.cuentaFinanciera, response.data.codigoTransaccion)
@@ -254,7 +254,7 @@ new Vue({
         formData.append("tipoMetodoPago", 'TARJETA')
         formData.append("tipoAccion", 'INGRESO')
         formData.append("monto", this.montoIngresoDinero)
-        const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/acreditacionPortalPagos.php"
+        const url = "http://25.89.40.130/Proyecto_Final_SS1/Portal_Financiero/WebServices/acreditacionPortalPagos.php"
         axios.post(url, formData).then((response) => {
           if (response.data.result === true) {
             this.crearTransaccionFinanciera(this.usuario, this.montoIngresoDinero, 'ACREDITACION', 'TARJETA', this.tarjetaCredito, response.data.codigoTransaccion)
@@ -288,7 +288,7 @@ new Vue({
           formData.append("monto", this.montoIngresoDinero)
 
 
-          const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/acreditacionPortalPagos.php"
+          const url = "http://25.89.40.130/Proyecto_Final_SS1/Portal_Financiero/WebServices/acreditacionPortalPagos.php"
           axios.post(url, formData).then((response) => {
             if (response.data.result === true) {
               this.crearTransaccionFinanciera(this.usuario, this.montoIngresoDinero, 'RETIRO', 'CUENTA', this.cuentaFinanciera, response.data.codigoTransaccion)
@@ -313,7 +313,7 @@ new Vue({
           formData.append("tipoMetodoPago", 'TARJETA')
           formData.append("tipoAccion", 'RETIRO')
           formData.append("monto", this.montoIngresoDinero)
-          const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/acreditacionPortalPagos.php"
+          const url = "http://25.89.40.130/Proyecto_Final_SS1/Portal_Financiero/WebServices/acreditacionPortalPagos.php"
           axios.post(url, formData).then((response) => {
             if (response.data.result === true) {
               this.crearTransaccionFinanciera(this.usuario, this.montoIngresoDinero, 'RETIRO', 'TARJETA', this.tarjetaCredito, response.data.codigoTransaccion)
@@ -473,7 +473,7 @@ new Vue({
           formData.append("noCuenta", this.noCuentaUsuarioFinancieroCuentaForm)
           
           //usar url externa
-          const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
+          const url = "http://25.89.40.130/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
           axios.post(url, formData).then( (response) => {
             if (response.data.result) {
               
@@ -516,7 +516,7 @@ new Vue({
         formData.append("fechaVencimiento", this.fechaVencimientoTarjetaForm)
         formData.append("codigoCVC", this.codigoCVCTarjetaForm)
         //usar url externa
-        const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
+        const url = "http://25.89.40.130/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
         axios.post(url, formData).then( (response) =>{
           if (response.data.result) {
             alert(response.data.mensaje)
