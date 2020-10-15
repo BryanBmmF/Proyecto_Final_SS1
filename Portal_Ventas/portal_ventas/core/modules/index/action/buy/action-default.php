@@ -50,7 +50,7 @@ if (!$result->execute(array($_SESSION['client_id']))) {
 	endforeach;
 
 	#ahora consultamos a la webservice si el usuario cuenta con saldo suficiente
-	$url = "http://localhost/Proyecto_Final_SS1/PortalPagos/WebServices/verificarEstadoCliente.php?comprador=$user_ppagos&total=$total";
+	$url = "http://25.6.64.40/Proyecto_Final_SS1/PortalPagos/WebServices/verificarEstadoCliente.php?comprador=$user_ppagos&total=$total";
 	$data = json_decode(file_get_contents($url), true );
 
 	//recorriendo el array devuelto
