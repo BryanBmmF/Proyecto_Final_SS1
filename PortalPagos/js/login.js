@@ -180,7 +180,7 @@ new Vue({
           formData.append("noCuenta", this.noCuentaUsuarioFinancieroCuentaForm)
           
           //usar url externa
-          const url = "http://25.89.40.130/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
+          const url = "http://localhost/Proyecto_Final_SS1/Portal_Financiero/WebServices/inicioSesionPortalPagos.php"
           axios.post(url, formData).then( (response) => {
             if (response.data.result) {
               
