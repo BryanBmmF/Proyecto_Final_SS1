@@ -10,7 +10,8 @@ if(count($_POST)>0){
 	$user->password = sha1(md5($_POST["password"]));
 	$user->is_admin="0";
 	$usuarioPortalDePagos=$_POST["userportalpagos"];
-	$contrasenaPortalDePagos = sha1(md5($_POST["passwordportaldepagos"]));
+	//$contrasenaPortalDePagos = sha1(md5($_POST["passwordportaldepagos"]));
+	$contrasenaPortalDePagos = md5($_POST["passwordportaldepagos"]);
 	#la url varia dependiendo el servidor donde se encuentre alojado
 
 	$url = "http://localhost/Proyecto_Final_SS1/PortalPagos/WebServices/verificarCuenta.php?user=$usuarioPortalDePagos&pass=$contrasenaPortalDePagos";
@@ -23,6 +24,12 @@ if(count($_POST)>0){
 			switch ($key) {
 				case 'respuesta':
 					$respuesta = $value;
+					break;
+				case 'correo':
+					$user->user_ppagos = $value;
+					break;
+				case 'pass':
+					$user->pass_ppagos = $value;
 					break;
 			}
 		}	

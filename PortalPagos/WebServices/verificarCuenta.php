@@ -16,10 +16,18 @@ if ($resultado->num_rows!=1){
         "respuesta"=>"user_invalido"); 
     $producto[] = array_map('utf8_encode', $value);
 } else {
-    #el usuario si existe
-    $value = array( 
-        "respuesta"=>"user_valido"); 
+    #El usuario si existe
+    while ($fila=$resultado -> fetch_array()) {
+        //$producto[] = array_map('utf8_encode', $fila);
+        
+        $value = array( 
+            "respuesta"=>"user_valido",
+            "correo"=>$fila[0],
+            "pass"=>$fila[3]
+        );
         $producto[] = array_map('utf8_encode', $value); 
+    }
+    
 
 }
 
