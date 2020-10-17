@@ -92,7 +92,7 @@ if (!$result->execute(array($_SESSION['client_id']))) {
 			$descripcion = "Nueva-Compra-Venta";
 
 			#ahora consultamos a la webservice para registrar la transaccion de cada producto dentro del carrito de compras
-			$url = "http://localhost/Proyecto_Final_SS1/PortalPagos/WebServices/realizarPagoPortalVentas.php?comprador=$user_ppagos&vendedor=$vendedor_ppagos&descripcion=$descripcion&total=$total";
+			$url = "http://25.6.64.40/Proyecto_Final_SS1/PortalPagos/WebServices/realizarPagoPortalVentas.php?comprador=$user_ppagos&vendedor=$vendedor_ppagos&descripcion=$descripcion&total=$total";
 			$data = json_decode(file_get_contents($url), true );
 
 			//recorriendo el array devuelto

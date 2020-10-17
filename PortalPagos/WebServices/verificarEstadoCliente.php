@@ -30,25 +30,25 @@ if ($result) {
                 $producto[] = array_map('utf8_encode', $mandar); 
                 echo json_encode($producto);
             } else {
-                $mandar['mensaje'] = 'SALDO INSUFICIENTE EN CORREO EMISOR: ' . $usuarioEmisor . ' POR FAVOR RECARGA FONDOS ANTES DE REALIZAR EL PAGO';
+                $mandar['mensaje'] = 'SALDO INSUFICIENTE, POR FAVOR RECARGA FONDOS ANTES DE REALIZAR EL PAGO';
                 $mandar['result'] = false;
                 $producto[] = array_map('utf8_encode', $mandar); 
                 echo json_encode($producto);
             }
         } else {
-            $mandar['mensaje'] = 'ESTADO DEL CORREO EMISOR: ' . $usuarioEmisor . ' NO VALIDO. SU ESTADO ACTUAL ES:' . $datos['estado'];
+            $mandar['mensaje'] = 'Es posible que tus datos hayan sido actualizados, porfavor revisa tus credenciales' . $datos['estado'];
             $mandar['result'] = false;
             $producto[] = array_map('utf8_encode', $mandar); 
             echo json_encode($producto);
         }
     } else {
-        $mandar['mensaje'] = 'EL CORREO EMISOR: ' . $usuarioEmisor . ' NO EXISTE' . mysqli_error($bd);
+        $mandar['mensaje'] = 'Ocurrió un error al hacer la transacción, porfavor intente mas tarde' . mysqli_error($bd);
         $mandar['result'] = false;
         $producto[] = array_map('utf8_encode', $mandar); 
         echo json_encode($producto);
     }
 } else {
-    $mandar['mensaje'] = 'PROBLEMAS PARA CONECTAR A LA BASE DE DATOS, DETALLES: ' . mysqli_error($bd);
+    $mandar['mensaje'] = 'PROBLEMAS EN EL SERVIDOR, DETALLES ' . mysqli_error($bd);
     $mandar['result'] = false;
     $producto[] = array_map('utf8_encode', $mandar); 
     echo json_encode($producto);
