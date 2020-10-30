@@ -17,6 +17,7 @@ $statuses = StatusData::getAll();
           <div class="col-md-12">
           <h1>Reporte de Ventas</h1>
           </div>
+          <hr>
           </div>
 <form>
 <input type="hidden" name="view" value="sellreport">
@@ -24,9 +25,7 @@ $statuses = StatusData::getAll();
             <div class="col-lg-2">
             <!--<select class="form-control" name="paymethod_id">
               <option> -- METODO --</option>
-              <?php foreach($paymethods as $pay):?>
-                <option value="<?php echo $pay->id; ?>"><?php echo $pay->name; ?></option>
-                <?php endforeach; ?>
+
             </select>-->
             </div>
             <div class="col-lg-2">
@@ -38,11 +37,14 @@ $statuses = StatusData::getAll();
             </select>-->
             </div>
             <div class="col-lg-3">
+            <label for="inputState">Desde: </label>
             <input type="date" name="start_at" class="form-control">
             </div>
             <div class="col-lg-3">
+            <label for="inputState">Hasta: </label>
             <input type="date" name="finish_at" class="form-control">
             </div>
+            <br>
             <div class="col-md-2">
             <input type="submit" value="Generar" class="btn btn-primary">
             </div>

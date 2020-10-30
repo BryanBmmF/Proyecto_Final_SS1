@@ -60,10 +60,10 @@ $discount=0;
                         <td><?php echo $b->created_at; ?></td>
                         <th>
                           <?php if($b->status_id!=5):?>
-                            <a href="./?action=changestatus&id=<?php echo $b->id;?>&status=2" class="btn btn-info btn-xs"><i class="fa fa-usd"></i></a>
+                            <a href="./?action=changestatus&id=<?php echo $b->id;?>&status=2" class="btn btn-info btn-xs"><i class="fa fa-credit-card"></i></a>
                             <a href="./?action=changestatus&id=<?php echo $b->id;?>&status=4" class="btn btn-success btn-xs"><i class="fa fa-truck"></i></a>
                             <a href="./?action=changestatus&id=<?php echo $b->id;?>&status=5" class="btn btn-primary btn-xs"><i class="fa fa-check"></i></a>
-                            <a href="./?action=changestatus&id=<?php echo $b->id;?>&status=3" class="btn btn-danger btn-xs"><i class="fa fa-remove"></i></a>
+                            <a href="./?action=changestatus&id=<?php echo $b->id;?>&status=3" class="btn btn-danger btn-xs"><i class="fa fa-ban"></i></a>
                           <?php else:?>
                             <i class="fa fa-check"></i>
                           <?php endif;?>

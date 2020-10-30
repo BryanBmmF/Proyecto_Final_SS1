@@ -1,0 +1,27 @@
+google-chrome --disable-web-security
+
+
+
+
+1.- sudo a2enmod headers
+2.- apache2ctl -M   #para ver si esta agregado el headers_module (shared)
+3.- nano /etc/apache2/apache2.conf 
+4.- 
+
+#agregar abajo de linea "AccessFileName .htaccess" lo siguiente:
+
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    Header set Access-Control-Allow-Credentials true
+</IfModule>
+
+5.- /etc/init.d/apache2 restart 
+
+6.- #agregar en cada archivo que se desee fuera de la pc local
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+
+
+
+

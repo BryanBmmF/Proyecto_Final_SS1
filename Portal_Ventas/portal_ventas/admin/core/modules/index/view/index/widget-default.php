@@ -1,7 +1,7 @@
 <div class="row">
 <div class="col-md-12">
-<h1>BIENVENIDO A KATANA</h1>
-<p>Katana es un sistema de tienda en linea.</p>
+<h1>Bienvenido a J3B Shop</h1>
+<p>Este es el sistema administrador de tu tienda en línea.</p>
 
 <?php
 $status = StatusData::getAll();
@@ -30,7 +30,7 @@ $status = StatusData::getAll();
 
                       </tbody>
                     </table>
-                  </div> 
+                  </div>
 
 <?php endif; ?>
                 </div>
